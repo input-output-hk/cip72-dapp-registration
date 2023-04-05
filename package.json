@@ -1,0 +1,42 @@
+{
+  "name": "cip-26",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/lucadonazzon/cip-26.git",
+  "author": "Luca Donazzon <luca.donazzon@me.com",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev_old": "nodemon --watch src src/index.js",
+    "dev": "nodemon --watch src --watch bin bin/index.js",
+    "start": "node bin/index.js",
+    "generate-json-files": "node src/index.js",
+    "generate-key-pair": "node src/generateKeyPair.js",
+    "submit-tx": "node src/submitTransaction.js",
+    "submit-cip": "node src/submitCip26.js",
+    "calculate-root-hash": "nodemon src/calculateRootHash.js"
+  },
+  "dependencies": {
+    "axios": "^1.2.3",
+    "blake2": "^4.1.1",
+    "cbor": "^8.1.0",
+    "chalk": "^5.2.0",
+    "figlet": "^1.5.2",
+    "inquirer": "^9.1.4",
+    "json-keys-sort": "^2.1.0",
+    "lodash": "^4.17.21",
+    "shelljs": "^0.8.5",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1",
+    "yaml": "^2.2.1",
+    "yargs": "^17.6.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3",
+    "esm": "^3.2.25",
+    "nodemon": "^2.0.20"
+  },
+  "bin": {
+    "cip26-cli": "./bin/index.js"
+  }
+}
