@@ -1,0 +1,19 @@
+{
+  "1667": {
+    "subject": "FakeNMKR-003",
+    "rootHash": "55a8068c5df72b86567f32a05101bb6a7c38f7bf720800b8344d9feb97cbcba7",
+    "metadata": ["shorturl.at/dqC28"],
+    "schema_version": "0.0.1",
+    "type": {
+      "action": "REGISTER",
+      "releaseNumber": "0.0.1",
+      "releaseName": "My first release"
+    },
+    "signature": {
+      "r": "02d2af9dd5555f809700a63103f8968502254596e59b425f0983a1527b9d65c4",
+      "s": "cb2e4900ce90a5d83f1f0c6b90a7af9bc9fc9d3788b2b16e172070331339560c",
+      "algo": "Ed25519−EdDSA",
+      "pub": "9b4139c173fd74898d4a562ef38adf56d49985fc749fe41149bad9a74006e55c"
+    }
+  }
+}

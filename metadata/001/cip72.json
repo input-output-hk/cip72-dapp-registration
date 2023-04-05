@@ -1,0 +1,21 @@
+{
+  "subject": "FakeNMKR-003",
+  "projectName": "FakeNMKR 002",
+  "link": "https://fakenmkr.testdapp.x/app",
+  "logo": "https://github.com/lucadonazzon/cip72/blob/main/metadata/001/zUqnLbfe_400x400",
+  "category": "NFT",
+  "description": {
+    "short": "Short summary that will be shown also on classic view card boards",
+    "long": "This is a dApp description..."
+  },
+  "screenshots": [
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/001/62f5137f9abfb3a9a872afa3_mint.png",
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/001/63bc4659e673c436a3dab8e1_NMKR-Store.png",
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/001/62f5137f270e0c520b0054be_games.png"
+  ],
+  "social": {
+    "companyName": "The Test Dapps Company",
+    "companyEmail": "info@testdapp.x",
+    "website": "https://www.testdapp.x"
+  }
+}

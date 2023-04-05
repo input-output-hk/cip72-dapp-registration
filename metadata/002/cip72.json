@@ -1,0 +1,20 @@
+{
+  "subject": "FakeRayWallet-003",
+  "projectName": "FakeRayWallet 003",
+  "link": "https://fakeraywallet.testdapp.x/app",
+  "logo": "https://github.com/lucadonazzon/cip72/blob/main/metadata/002/DJAUs3nJ_400x400.jpg",
+  "category": "DeFi",
+  "description": {
+    "short": "Short summary that will be shown also on classic view card boards",
+    "long": "This is a dApp description..."
+  },
+  "screenshots": [
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/002/FUMXInlX0AYTlwG?format=jpg&name=4096x4096",
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/002/6fqipOaTvu9Cm2jAh8yiAhhD9gr9XLInsB63vjDD_hM.webp"
+  ],
+  "social": {
+    "companyName": "The Test Dapps Company",
+    "companyEmail": "info@testdapp.x",
+    "website": "https://www.testdapp.x"
+  }
+}

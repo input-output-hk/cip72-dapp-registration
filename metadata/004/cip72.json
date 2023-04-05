@@ -1,0 +1,21 @@
+{
+  "subject": "FakeBlockfrost-003",
+  "projectName": "FakeBlockfrost 003",
+  "link": "https://fakeblockfrost.testdapp.x/app",
+  "logo": "https://github.com/lucadonazzon/cip72/blob/main/metadata/004/izosb2Ch_400x400.jpg",
+  "category": "Development",
+  "description": {
+    "short": "Short summary that will be shown also on classic view card boards",
+    "long": "This is a dApp description...????"
+  },
+  "screenshots": [
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/004/FanRKE3WQAADeC1.jpeg",
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/004/Fg5N8jxWYAQnh8w.jpeg",
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/004/FVXta6OXEAEAYTU.jpeg"
+  ],
+  "social": {
+    "companyName": "The Test Dapps Company",
+    "companyEmail": "info@testdapp.x",
+    "website": "https://www.testdapp.x"
+  }
+}

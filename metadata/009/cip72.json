@@ -1,0 +1,21 @@
+{
+  "subject": "GamesTestDApp-4",
+  "projectName": "GamesTestDApp 004",
+  "link": "https://GamesTestDApp4.testdapp.x/app",
+  "logo": "https://github.com/lucadonazzon/cip72/blob/main/metadata/008/cardano_logo.png",
+  "category": "Games",
+  "description": {
+    "short": "Short summary that will be shown also on classic view card boards",
+    "long": "This is a dApp description..."
+  },
+  "screenshots": [
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/008/screenshot1.webp",
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/008/screenshot2.png",
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/008/screenshot3.webp"
+  ],
+  "social": {
+    "companyName": "The Test Dapps Company",
+    "companyEmail": "info@testdapp.x",
+    "website": "https://www.testdapp.x"
+  }
+}

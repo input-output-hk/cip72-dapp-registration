@@ -1,0 +1,20 @@
+{
+  "subject": "FakeSundaySwap-003",
+  "projectName": "FakeSundaySwap 003",
+  "link": "https://fakesundayswap.testdapp.x/app",
+  "logo": "https://github.com/lucadonazzon/cip72/blob/main/metadata/006/jftnVq8h_400x400.jpg",
+  "category": "DeFi",
+  "description": {
+    "short": "Short summary that will be shown also on classic view card boards",
+    "long": "This is a dApp description..."
+  },
+  "screenshots": [
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/006/6c248bb8-1a68-4329-9d73-c847e0b36e5d.png",
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/006/1500x500.jpeg"
+  ],
+  "social": {
+    "companyName": "The Test Dapps Company",
+    "companyEmail": "info@testdapp.x",
+    "website": "https://www.testdapp.x"
+  }
+}

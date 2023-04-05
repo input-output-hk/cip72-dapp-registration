@@ -1,0 +1,21 @@
+{
+  "subject": "FakeArtano-003",
+  "projectName": "FakeArtano 003",
+  "link": "https://fakeminswap.testdapp.x/app",
+  "logo": "https://github.com/lucadonazzon/cip72/blob/main/metadata/003/j4ZAeBPT_400x400.jpg",
+  "category": "NFT",
+  "description": {
+    "short": "Short summary that will be shown also on classic view card boards",
+    "long": "This is a dApp description..."
+  },
+  "screenshots": [
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/003/5qhwfq48nb881.webp",
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/003/103272-ST-Screen Shot 2022-04-13 at 15.12.09.png",
+    "https://github.com/lucadonazzon/cip72/blob/main/metadata/003/Cover-aligned.png"
+  ],
+  "social": {
+    "companyName": "The Test Dapps Company",
+    "companyEmail": "info@testdapp.x",
+    "website": "https://www.testdapp.x"
+  }
+}
