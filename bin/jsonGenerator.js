@@ -46,42 +46,6 @@ const encodeAndSign = (subject, entry, entryName, secretKey = '') => {
 // **********************************************************************************************************
 // **********************************************************************************************************
 // **********************************************************************************************************
-
-function generateJson(cipYmlFilePath, secretKey, publicKey, cipFilePath) {
-  const file = fs.readFileSync(cipYmlFilePath, 'utf8')
-  const yml = YAML.parse(file);
-
-  const myCipJsonFile = {}
-  subject = yml.subject;
-
-  for (const prop in yml) {
-    if (prop === 'entries') {
-      for (const item of yml[prop]) {
-        const { entryName, entry } = item;
-        const signature = {
-          signature: encodeAndSign(subject, entry, entryName, secretKey),
-          publicKey: publicKey
-        }
-        myCipJsonFile[entryName] = {
-          ...entry, signatures: [signature]
-        }
-      }
-    } else {
-      myCipJsonFile[prop] = yml[prop]
-    }
-  }
-
-  try {
-    fs.writeFileSync(cipFilePath, JSON.stringify(myCipJsonFile))
-    return { subject, cip26FilePath: cipFilePath }
-  } catch (error) {
-    return error
-  }
-}
-
-// **********************************************************************************************************
-// **********************************************************************************************************
-// **********************************************************************************************************
 const cleanJsonCip = (cip) => {
   const _cip = {}
   for (const attr in cip) {
@@ -98,9 +62,10 @@ const cleanJsonCip = (cip) => {
 // **********************************************************************************************************
 // **********************************************************************************************************
 
-const calculateRootHash = (cipFilePath) => {
-  const rawdata = fs.readFileSync(cipFilePath);
-  const cip = JSON.parse(rawdata);
+const calculateRootHash = async (metadataUrl) => {
+  const jsonRaw = await fetch(metadataUrl)
+
+  const cip = await jsonRaw.json();
   // console.log("--", cip)
   //should we sort?
   const sortedCip = jsonKeysSort.sort(cip)
@@ -112,29 +77,23 @@ const calculateRootHash = (cipFilePath) => {
 // **********************************************************************************************************
 // **********************************************************************************************************
 
-const generateMetadataJsonFile = (cipJsonFilePath, metadataFilePath, actionType, releaseNumber, releaseName, offChainStoragePath, cipRootHash, secretKey, publicKey) => {
+
+const generateMetadataJsonFile = (offchainMetadataJsonUrl, onchainMetadataFilePath, onchainMetadataSubject, actionType, cipRootHash, secretKey, publicKey) => {
   try {
-    const rawdata = fs.readFileSync(cipJsonFilePath);
-    const { subject } = JSON.parse(rawdata);
 
     const metadataJson = {
       "1667": {
-        subject,
+        subject: onchainMetadataSubject,
         rootHash: cipRootHash,
         metadata: [
-          offChainStoragePath
+          offchainMetadataJsonUrl
         ],
-        "schema_version": "0.0.1",
         type: {
           action: actionType,
-          releaseNumber,
-          releaseName
+          comment: "This is a comment"
         },
-        // [offChainStorage]: offChainStoragePath,
       }
     }
-
-    // console.log("metadataJson:", metadataJson); return;k
 
     const _blake = blake2.createHash('blake2b', { digestLength: 32 });
     const _hash = _blake.update(Buffer.from(JSON.stringify(metadataJson['1667']))).digest('hex')
@@ -152,7 +111,7 @@ const generateMetadataJsonFile = (cipJsonFilePath, metadataFilePath, actionType,
     }
 
     // console.log(">>>>>metadataFilePath:", metadataFilePath, JSON.stringify(metadataJson))
-    fs.writeFileSync(metadataFilePath, JSON.stringify(metadataJson))
+    fs.writeFileSync(onchainMetadataFilePath, JSON.stringify(metadataJson))
     return true
   } catch (error) {
     return error;
@@ -164,5 +123,5 @@ const generateMetadataJsonFile = (cipJsonFilePath, metadataFilePath, actionType,
 // **********************************************************************************************************
 
 export {
-  generateJson, calculateRootHash, generateMetadataJsonFile
+  calculateRootHash, generateMetadataJsonFile
 }

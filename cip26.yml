@@ -1,0 +1,11 @@
+---
+subject: TestDApp-001
+entries:
+  - entryName: DAppDescription
+    entry:
+      value: This is a dApp description...UPDATE(1)
+      sequenceNumber: 1
+  - entryName: DAppSummary
+    entry:
+      value: Short summary that will be shown also on classic view card boards...UPDATE(1)
+      sequenceNumber: 1
