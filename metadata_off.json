@@ -1,0 +1,18 @@
+{
+  "1667": {
+    "rootHash": "3cd5ec8ea14206057eb4fbed395ca46d97ab47ab2087d88dacf09e3942eaceca",
+    "metadata": ["./"],
+    "schema_version": "0.0.1",
+    "type": {
+      "action": "REGISTER",
+      "releaseNumber": "0.0.1",
+      "releaseName": "My first release"
+    },
+    "signature": {
+      "r": "7d0727feec17864933a01bce2f25a2d81e77938b40d2f2bab6b12adaf7596c68",
+      "s": "bc50e2f4540e145cd62302470dcd4bbef941dd7ea43c8a9d65a113fa25434d08",
+      "algo": "Ed25519−EdDSA",
+      "pub": "193e5a9f7b4cb7fd77d709db53b722c79247cc55e57c723a5f7ef3b4843c497f"
+    }
+  }
+}
