@@ -1,1 +1,14 @@
-{"1667":{"subject":"MyFirstDapp","rootHash":"73d419c492cf5d3a3cef32c4c7037f14d54509a945779bd8ffc165ef035f399b","metadata":["https://shorturl.at/rxKZ7"],"type":{"action":"REGISTER","comment":"This is a comment"},"signature":{"r":"d109988ef37004049b915e1734bb83429bb3de382a05ba6af7d45073ca7d393c","s":"f03e4ba6c164e3189e5278d466aa18827ef5ab167a7c1607791dc84e8dc99406","algo":"Ed25519−EdDSA","pub":"193e5a9f7b4cb7fd77d709db53b722c79247cc55e57c723a5f7ef3b4843c497f"}}}
+{
+  "1667": {
+    "subject": "MyFirstDapp",
+    "rootHash": "73d419c492cf5d3a3cef32c4c7037f14d54509a945779bd8ffc165ef035f399b",
+    "metadata": ["https://shorturl.at/rxKZ7"],
+    "type": { "action": "REGISTER", "comment": "This is a comment" },
+    "signature": {
+      "r": "d109988ef37004049b915e1734bb83429bb3de382a05ba6af7d45073ca7d393c",
+      "s": "f03e4ba6c164e3189e5278d466aa18827ef5ab167a7c1607791dc84e8dc99406",
+      "algo": "Ed25519−EdDSA",
+      "pub": "193e5a9f7b4cb7fd77d709db53b722c79247cc55e57c723a5f7ef3b4843c497f"
+    }
+  }
+}
