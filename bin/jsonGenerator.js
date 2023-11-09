@@ -9,6 +9,7 @@ import * as util from 'tweetnacl-util';
 nacl.util = util;
 
 let subject = '';
+const MAX_CHARACTER_LENGTH = 64;
 
 dotenv.config();
 
@@ -41,6 +42,19 @@ const signMsg = (message, secretKey) => {
 const encodeAndSign = (subject, entry, entryName, secretKey = '') => {
   const encodedMsg = encodeMessage(subject, entry, entryName);
   return signMsg(encodedMsg, secretKey);
+}
+
+const splitString = (value) => {
+  if (value.length === 0) {
+    return [''];
+  }
+
+  const substrings = [];
+  for (let i = 0; i < value.length; i += MAX_CHARACTER_LENGTH) {
+    substrings.push(value.substring(i, i + MAX_CHARACTER_LENGTH));
+  }
+
+  return substrings;
 }
 
 // **********************************************************************************************************
@@ -101,8 +115,6 @@ const cleanJsonCip = (cip) => {
 const calculateRootHash = (cipFilePath) => {
   const rawdata = fs.readFileSync(cipFilePath);
   const cip = JSON.parse(rawdata);
-  // console.log("--", cip)
-  //should we sort?
   const sortedCip = jsonKeysSort.sort(cip)
   const _hash = blake2.createHash('blake2b', { digestLength: 32 });
   return _hash.update(Buffer.from(JSON.stringify(sortedCip))).digest('hex')
@@ -112,35 +124,28 @@ const calculateRootHash = (cipFilePath) => {
 // **********************************************************************************************************
 // **********************************************************************************************************
 
-const generateMetadataJsonFile = (cipJsonFilePath, metadataFilePath, actionType, releaseNumber, releaseName, offChainStoragePath, cipRootHash, secretKey, publicKey) => {
+const generateMetadataJsonFile = (cipJsonFilePath, metadataFilePath, actionType, releaseComment, offChainStoragePath, cipRootHash, secretKey, publicKey) => {
   try {
     const rawdata = fs.readFileSync(cipJsonFilePath);
     const { subject } = JSON.parse(rawdata);
+    const offChainStoragePathArray = splitString(offChainStoragePath)
 
     const metadataJson = {
       "1667": {
         subject,
         rootHash: cipRootHash,
-        metadata: [
-          offChainStoragePath
-        ],
-        "schema_version": "0.0.1",
+        metadata: offChainStoragePathArray,
         type: {
           action: actionType,
-          releaseNumber,
-          releaseName
+          comment: releaseComment
         },
-        // [offChainStorage]: offChainStoragePath,
       }
     }
-
-    // console.log("metadataJson:", metadataJson); return;k
 
     const _blake = blake2.createHash('blake2b', { digestLength: 32 });
     const _hash = _blake.update(Buffer.from(JSON.stringify(metadataJson['1667']))).digest('hex')
 
     const _sign = nacl.sign.detached(Buffer.from(_hash, 'hex'), Buffer.from(secretKey, 'hex'))
-    // console.log(">>>>verify signature:",nacl.sign.detached.verify(Buffer.from(_hash, 'hex'), _sign, Buffer.from(publicKey, 'hex')))
 
     const _sign2 = Buffer.from(_sign).toString('hex')
 
@@ -151,7 +156,6 @@ const generateMetadataJsonFile = (cipJsonFilePath, metadataFilePath, actionType,
       pub: publicKey
     }
 
-    // console.log(">>>>>metadataFilePath:", metadataFilePath, JSON.stringify(metadataJson))
     fs.writeFileSync(metadataFilePath, JSON.stringify(metadataJson))
     return true
   } catch (error) {

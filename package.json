@@ -1,9 +1,7 @@
 {
-  "name": "cip-26",
+  "name": "cip-72",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/lucadonazzon/cip-26.git",
-  "author": "Luca Donazzon <luca.donazzon@me.com",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -13,7 +11,6 @@
     "generate-json-files": "node src/index.js",
     "generate-key-pair": "node src/generateKeyPair.js",
     "submit-tx": "node src/submitTransaction.js",
-    "submit-cip": "node src/submitCip26.js",
     "calculate-root-hash": "nodemon src/calculateRootHash.js"
   },
   "dependencies": {
@@ -37,6 +34,6 @@
     "nodemon": "^2.0.20"
   },
   "bin": {
-    "cip26-cli": "./bin/index.js"
+    "cip72-cli": "./bin/index.js"
   }
 }

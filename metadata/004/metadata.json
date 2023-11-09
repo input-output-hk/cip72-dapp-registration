@@ -1,1 +1,21 @@
-{"1667":{"subject":"FakeBlockfrost-003","rootHash":"bd4bfbb01b5f6ad1bc55d6098230947f852db44c7bec6e2b9e897209b8bcd837","metadata":["shorturl.at/enoJO"],"schema_version":"0.0.1","type":{"action":"REGISTER","releaseNumber":"0.0.1","releaseName":"My first release"},"signature":{"r":"9105fd4f4fc127fe3c437a8b530ba3cb2a4a80a5528f04313043b16d434e1bf3","s":"58017a69094b4f93a51412f1b9503f921ed209bc259ac3c511240b9314034701","algo":"Ed25519−EdDSA","pub":"9b4139c173fd74898d4a562ef38adf56d49985fc749fe41149bad9a74006e55c"}}}
+{
+  "1667": {
+    "subject": "FakeBlockfrost-003",
+    "rootHash": "bd4bfbb01b5f6ad1bc55d6098230947f852db44c7bec6e2b9e897209b8bcd837",
+    "metadata": [
+      "shorturl.at/enoJO"
+    ],
+    "schema_version": "0.0.1",
+    "type": {
+      "action": "REGISTER",
+      "releaseNumber": "0.0.1",
+      "releaseName": "My first release"
+    },
+    "signature": {
+      "r": "9105fd4f4fc127fe3c437a8b530ba3cb2a4a80a5528f04313043b16d434e1bf3",
+      "s": "58017a69094b4f93a51412f1b9503f921ed209bc259ac3c511240b9314034701",
+      "algo": "Ed25519−EdDSA",
+      "pub": "9b4139c173fd74898d4a562ef38adf56d49985fc749fe41149bad9a74006e55c"
+    }
+  }
+}

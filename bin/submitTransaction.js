@@ -168,4 +168,40 @@ const submitTransaction = (net = 'preview') => {
     });
 }
 
-export { queryUTXO, createDraftTransaction, calculateTransactionFee, buildRealTransaction, signdRealTransaction, submitTransaction }
+const getSignedTxTransactionId = () => {
+    return new Promise((resolve, reject) => {
+        exec(`cardano-cli transaction txid --tx-file tx.signed`, (error, stdout, stderr) => {
+            if (error) {
+                reject(error.message)
+                return;
+            }
+            if (stderr) {
+                reject(stderr)
+                return;
+            }
+            resolve(stdout)
+        });
+    });
+}
+
+
+const cleanupTransactionFiles = () => {
+    return new Promise((resolve, reject) => {
+        exec(`rm tx.draft tx.signed`, (error, stdout, stderr) => {
+            if (error) {
+                reject(error.message)
+                return;
+            }
+            if (stderr) {
+                reject(stderr)
+                return;
+            }
+            resolve(true)
+        });
+    });
+}
+
+export {
+    queryUTXO, createDraftTransaction, calculateTransactionFee, buildRealTransaction, signdRealTransaction,
+    submitTransaction, cleanupTransactionFiles, getSignedTxTransactionId
+}
