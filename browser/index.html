@@ -10,14 +10,26 @@
 <div id="app">
   <h2 id="error-no-wallet" class="root-element">No wallet available. In order to register your dApp you need to get some cardano wallet extension first</h2>
   <form id="registration-form" class="root-element">
-    <label for="metadata-subject">Subject</label>
-    <input id="metadata-subject" />
+    <label for="data-type-action">Type*</label>
+    <select id="data-type-action" required>
+      <option>REGISTER</option>
+      <option>DE_REGISTER</option>
+    </select>
     <br />
-    <label for="metadata-project-name">Project name</label>
-    <input id="metadata-project-name" />
+    <label for="data-type-comment">Comment</label>
+    <input id="data-type-comment" minlength="1" maxlength="64" />
     <br />
-    <label for="wallet-selector">Wallet for signing</label>
-    <select id="wallet-selector"></select>
+    <label for="data-subject">Subject*</label>
+    <input id="data-subject" minlength="1" maxlength="64" required />
+    <br />
+    <label for="data-root-hash">Root hash*</label>
+    <input id="data-root-hash" minlength="64" maxlength="64" required />
+    <br />
+    <label for="data-metadata">Metadata url</label>
+    <input id="data-metadata" minlength="1" maxlength="64" type="url" />
+    <br />
+    <label for="wallet-selector">Wallet for signing*</label>
+    <select id="wallet-selector" required></select>
     <br />
     <button>Register</button>
   </form>

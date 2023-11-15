@@ -115,8 +115,13 @@ window.addEventListener('load', async () => {
 element.registrationForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   const metadata = {
-    subject: event.target.elements['metadata-subject'].value,
-    projectName: event.target.elements['metadata-project-name'].value,
+    subject: event.target.elements['data-subject'].value,
+    rootHash: event.target.elements['data-root-hash'].value,
+    metadata: [event.target.elements['data-metadata'].value],
+    type: {
+      action: event.target.elements['data-type-action'].value,
+      comment: event.target.elements['data-type-comment'].value,
+    },
   }
 
   const walletName = event.target.elements['wallet-selector'].value;
