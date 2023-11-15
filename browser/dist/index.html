@@ -1,0 +1,25 @@
+<head><script defer src="main.js"></script></head><title>dApp registration form</title>
+<style>
+  .root-element {
+    display: none;
+  }
+  .root-element--visible {
+    display: block;
+  }
+</style>
+<div id="app">
+  <h2 id="error-no-wallet" class="root-element">No wallet available. In order to register your dApp you need to get some cardano wallet extension first</h2>
+  <form id="registration-form" class="root-element">
+    <label for="metadata-subject">Subject</label>
+    <input id="metadata-subject" />
+    <br />
+    <label for="metadata-project-name">Project name</label>
+    <input id="metadata-project-name" />
+    <br />
+    <label for="wallet-selector">Wallet for signing</label>
+    <select id="wallet-selector"></select>
+    <br />
+    <button>Register</button>
+  </form>
+  <h2 id="success-message" class="root-element">Successfully submitted the transaction: <a id="success-message-link" target="_blank"></a></h2>
+</div>

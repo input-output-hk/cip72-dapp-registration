@@ -1,0 +1,23 @@
+{
+  "name": "browser",
+  "version": "0.1.0",
+  "description": "HTML dApp registration",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack build -c webpack-config.js",
+    "build:watch": "webpack build -c webpack-config.js --watch",
+    "dev": "webpack serve -c webpack-config.js"
+  },
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "html-webpack-plugin": "^5.5.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "@cardano-sdk/tx-construction": "^0.14.2",
+    "@emurgo/cardano-serialization-lib-asmjs": "^11.5.0"
+  }
+}

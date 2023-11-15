@@ -1,11 +1,14 @@
 {
-  "name": "cip-26",
+  "name": "cip-72",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/lucadonazzon/cip-26.git",
-  "author": "Luca Donazzon <luca.donazzon@me.com",
+  "author": "IOHK",
   "license": "MIT",
   "type": "module",
+  "private": "true",
+  "workspaces": [
+    "browser"
+  ],
   "scripts": {
     "dev_old": "nodemon --watch src src/index.js",
     "dev": "nodemon --watch src --watch bin bin/index.js",
