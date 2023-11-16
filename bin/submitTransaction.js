@@ -51,6 +51,7 @@ const queryUTXO = (walletAddress, net = 'preview') => {
         });
     });
 }
+
 // **********************************************************************************************************
 const createDraftTransaction = (walletAddress, metadataFilePath, TxHash, TxIx) => {
     return new Promise((resolve, reject) => {
