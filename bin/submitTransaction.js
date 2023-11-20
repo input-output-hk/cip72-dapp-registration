@@ -1,4 +1,5 @@
 import { exec } from "child_process"
+import { rimraf } from "rimraf";
 
 const getNet = (net) => {
     let _net = '';
@@ -133,7 +134,7 @@ const buildRealTransaction = (walletAddress, metadataFilePath, TxHash, TxIx, fee
 }
 
 // **********************************************************************************************************
-const signdRealTransaction = (paymentSkeyFilePath, net = 'preview') => {
+const signedRealTransaction = (paymentSkeyFilePath, net = 'preview') => {
     return new Promise((resolve, reject) => {
         exec(`cardano-cli transaction sign \
         --tx-body-file tx.draft \
@@ -185,24 +186,9 @@ const getSignedTxTransactionId = () => {
     });
 }
 
-
-const cleanupTransactionFiles = () => {
-    return new Promise((resolve, reject) => {
-        exec(`rm tx.draft tx.signed`, (error, stdout, stderr) => {
-            if (error) {
-                reject(error.message)
-                return;
-            }
-            if (stderr) {
-                reject(stderr)
-                return;
-            }
-            resolve(true)
-        });
-    });
-}
+const cleanupTransactionFiles = () => rimraf(['tx.draft', 'tx.signed']);
 
 export {
-    queryUTXO, createDraftTransaction, calculateTransactionFee, buildRealTransaction, signdRealTransaction,
+    queryUTXO, createDraftTransaction, calculateTransactionFee, buildRealTransaction, signedRealTransaction,
     submitTransaction, cleanupTransactionFiles, getSignedTxTransactionId
 }

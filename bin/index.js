@@ -12,7 +12,7 @@ import {
   createDraftTransaction,
   calculateTransactionFee,
   buildRealTransaction,
-  signdRealTransaction,
+  signedRealTransaction,
   submitTransaction,
   cleanupTransactionFiles, getSignedTxTransactionId
 } from "./submitTransaction.js";
@@ -20,9 +20,6 @@ import {
 dotenv.config();
 
 const walletAddress = process.env.WALLET_ADDRESS;
-const publicKey = process.env.PUBLIC_KEY;
-const secretKey = process.env.SECRET_KEY;
-
 const cipJsonFilePath = process.env.CIP_JSON_FILE_PATH;
 const metadataFilePath = process.env.METADATA_FILE_PATH;
 const protocolFilePath = process.env.PROTOCOL_FILE_PATH;
@@ -68,29 +65,11 @@ const askQuestions0 = () => {
 const askQuestions1 = () => {
   const questions = [
     {
-      name: "_publicKey",
-      type: "input",
-      message: "Public Key?",
-      default: publicKey
-    },
-    {
-      name: "_secretKey",
-      type: "input",
-      message: "Secret Key?",
-      default: secretKey
-    },
-    {
       name: "_cipJsonFilePath",
       type: "input",
       message: "CIP-72 json path/file-name?",
       default: cipJsonFilePath
     },
-  ];
-  return inquirer.prompt(questions);
-};
-
-const askQuestions2 = () => {
-  const questions = [
     {
       name: "_metadataFilePath",
       type: "input",
@@ -105,21 +84,20 @@ const askQuestions2 = () => {
       default: "REGISTER"
     },
     {
-      name: "_releaseComment",
+      name: "_comment",
       type: "input",
-      message: "Enter a release comment:",
-      default: 'New release'
+      message: "Comment your change (optional):"
     },
     {
       name: "_offChainStoragePath",
       type: "input",
-      message: "What's the offchain metadata store url?",
+      message: "What's the offchain metadata url?",
     },
   ];
   return inquirer.prompt(questions);
 };
 
-const askQuestions3 = () => {
+const askQuestions2 = () => {
   const questions = [
     {
       name: "_walletAddress",
@@ -157,26 +135,24 @@ const run = async () => {
     console.log(chalk.black.bgMagenta.bold(_.padEnd('-', PAD_END_SIZE, '-')))
     const { _net } = await askQuestions0();
 
-    // ask questions2: Metadata.json generation
+    // ask questions1: Metadata.json generation
     console.log();
     console.log(chalk.yellowBright.bgBlue.bold(_.padEnd('-', PAD_END_SIZE, '-')))
     console.log(chalk.yellowBright.bgBlue.bold(_.pad("Metadata.json generation", PAD_END_SIZE)));
     console.log(chalk.yellowBright.bgBlue.bold(_.padEnd('-', PAD_END_SIZE, '-')))
     const answers1 = await askQuestions1();
-    const { _cipJsonFilePath, _secretKey, _publicKey } = answers1
-    const answers2 = await askQuestions2();
-    const { _metadataFilePath, _actionType, _releaseComment, _offChainStoragePath } = answers2;
+    const { _metadataFilePath, _actionType, _comment, _offChainStoragePath, _cipJsonFilePath } = answers1;
     const _rootHash = calculateRootHash(_cipJsonFilePath)
     console.log(chalk.yellowBright.bgBlue.bold(_.pad(`Calculated rootHash: ${_rootHash}`, PAD_END_SIZE)))
-    const out2 = generateMetadataJsonFile(_cipJsonFilePath, _metadataFilePath, _actionType, _releaseComment, _offChainStoragePath, _rootHash, _secretKey, _publicKey)
+    const out2 = generateMetadataJsonFile(_cipJsonFilePath, _metadataFilePath, _actionType, _comment, _offChainStoragePath, _rootHash)
     if (out2 === true) console.log(chalk.yellowBright.bgBlue.bold(_.pad(`Metadata.json generated: ${_metadataFilePath}`, PAD_END_SIZE)))
 
-    // ask questions3: on-chain submission
+    // ask questions2: on-chain submission
     console.log();
     console.log(chalk.black.bgGreenBright.bold(_.padEnd('-', PAD_END_SIZE, '-')))
     console.log(chalk.black.bgGreenBright.bold(_.pad("Block-chain submission", PAD_END_SIZE)));
     console.log(chalk.black.bgGreenBright.bold(_.padEnd('-', PAD_END_SIZE, '-')))
-    const answers4 = await askQuestions3();
+    const answers4 = await askQuestions2();
     const { _walletAddress, _protocolFilePath, _paymentSkeyFilePath } = answers4;
     const { TxHash, TxIx, Amount } = await queryUTXO(_walletAddress, _net);
 
@@ -194,7 +170,7 @@ const run = async () => {
     console.log(chalk.black.bgGreenBright.bold(_.padEnd(`Calculating transaction fee...`, PAD_END_SIZE)))
     const { fee, finalAmount } = await calculateTransactionFee(_protocolFilePath, Amount, _net);
     console.log(chalk.black.bgGreenBright.bold(_.padEnd(`- Fee: ${fee}`, PAD_END_SIZE)))
-    console.log(chalk.black.bgGreenBright.bold(_.padEnd(`- Final wallet ,amount: ${finalAmount}`, PAD_END_SIZE)))
+    console.log(chalk.black.bgGreenBright.bold(_.padEnd(`- Final wallet amount: ${finalAmount}`, PAD_END_SIZE)))
 
     console.log();
     console.log(chalk.black.bgGreenBright.bold(_.padEnd(`Building transaction...`, PAD_END_SIZE)))
@@ -203,7 +179,7 @@ const run = async () => {
 
     console.log();
     console.log(chalk.black.bgGreenBright.bold(_.padEnd(`Signing transaction...`, PAD_END_SIZE)))
-    await signdRealTransaction(_paymentSkeyFilePath, _net)
+    await signedRealTransaction(_paymentSkeyFilePath, _net)
     console.log(chalk.black.bgGreenBright.bold(_.padEnd(`- Transaction signed!`, PAD_END_SIZE)))
 
     console.log();

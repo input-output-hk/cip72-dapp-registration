@@ -22,6 +22,7 @@
     "inquirer": "^9.1.4",
     "json-keys-sort": "^2.1.0",
     "lodash": "^4.17.21",
+    "rimraf": "^5.0.5",
     "shelljs": "^0.8.5",
     "tweetnacl": "^1.0.3",
     "tweetnacl-util": "^0.15.1",
