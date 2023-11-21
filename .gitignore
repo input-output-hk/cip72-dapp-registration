@@ -110,3 +110,4 @@ payment.*
 protocol.json
 stake.*
 tx.*
+phrase.prv

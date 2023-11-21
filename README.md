@@ -6,28 +6,40 @@
 
 ## Set up wallet
 
-1. Create Payment Keys\
-`$ cardano-cli address key-gen --verification-key-file payment.vkey --signing-key-file payment.skey`
-2. To generate a stake key pair\
-`$ cardano-cli stake-address key-gen --verification-key-file stake.vkey --signing-key-file stake.skey`
-3. Create Wallet Address\
-`$ cardano-cli address build --payment-verification-key-file payment.vkey --stake-verification-key-file stake.vkey --out-file payment.addr (--mainnet | --testnet-magic NATURAL)`
-4. Request Test ADA at [https://docs.cardano.org/cardano-testnet/tools/faucet](https://docs.cardano.org/cardano-testnet/tools/faucet)\
+There are two ways to setup a wallet. You can use your mnemonic to setup an already existing wallet or create a new wallet.
+
+### Create a new wallet
+
+1. Grant script permission to run `chmod +x ./scripts/setup-new-wallet.sh`
+2. Setup new wallet by running `yarn setup-new-wallet`
+3. Request Test ADA at [https://docs.cardano.org/cardano-testnet/tools/faucet](https://docs.cardano.org/cardano-testnet/tools/faucet)\
 NB transaction fee it's a variable amount, something around 190.000 lovelace
-5. Retrieves the node’s current pool parameters\
-`$ cardano-cli query protocol-parameters --out-file protocol.json (--mainnet | --testnet-magic NATURAL)`
-6. Query tip\
+4. Query tip\
 `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
-7. Install packages\
+5. Install packages\
 `$ yarn install`
-8. Generate key pair\
-`$ yarn generate-key-pair`\
-Copy `publicKey` and `secretKey` to `.env` file (see step 9)
-9. Copy .env_example to .end and edit it accordingly\
+6. Copy .env_example to .end and edit it accordingly\
 `$ cp .env_example .env`
-10. Copy `cip26_example.yml` to `cip26.yml` and edit it accordingly
-11. Launch **cip26-cli** and follow the instructions\
+7. Create a cip72 metadata file.
+8. Launch **cip72-cli** and follow the instructions\
 `$ yarn start`
+
+### Setup mnemonic wallet
+
+1. Make sure you have `bech32` and `cardano-address` installed. You can test with `bech32 -v` and `cardano-address -v` or install using `cabal install bech32 cardano-address`
+2. Create `phrase.prv` file and fill it up with your mnemonic in space seperated format.
+3. Grant script permission to run `chmod +x ./scripts/setup-mnemonic-wallet.sh`
+4. Setup mnemonic wallet by running `yarn setup-mnemonic-wallet`
+5. Make sure your wallet has test ADA for transaction fee
+6. Query tip\
+   `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
+7. Install packages\
+   `$ yarn install`
+8. Copy .env_example to .end and edit it accordingly\
+   `$ cp .env_example .env`
+9. Create a cip72 metadata file.
+10. Launch **cip72-cli** and follow the instructions\
+    `$ yarn start`
 
 ### Testnet-magic numbers
 - 9: Devnet. 	`--testnet-magic=9`
