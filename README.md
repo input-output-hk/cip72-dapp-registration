@@ -6,7 +6,10 @@
 
 ## Set up wallet
 
-There are two ways to setup a wallet. You can use your mnemonic to setup an already existing wallet or create a new wallet.
+There are three ways to setup a wallet.
+- Create new wallet
+- Restore wallet using mnemonics.
+- Restore a wallet using existing keys (without mnemonics).
 
 ### Create a new wallet
 
@@ -24,12 +27,12 @@ NB transaction fee it's a variable amount, something around 190.000 lovelace
 8. Launch **cip72-cli** and follow the instructions\
 `$ yarn start`
 
-### Setup mnemonic wallet
+### Restore wallet from mnemonic
 
 1. Make sure you have `bech32` and `cardano-address` installed. You can test with `bech32 -v` and `cardano-address -v` or install using `cabal install bech32 cardano-address`
 2. Create `phrase.prv` file and fill it up with your mnemonic in space seperated format.
-3. Grant script permission to run `chmod +x ./scripts/setup-mnemonic-wallet.sh`
-4. Setup mnemonic wallet by running `yarn setup-mnemonic-wallet`
+3. Grant script permission to run `chmod +x ./scripts/restore-mnemonic-wallet.sh`
+4. Setup mnemonic wallet by running `yarn restore-mnemonic-wallet`
 5. Make sure your wallet has test ADA for transaction fee
 6. Query tip\
    `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
@@ -40,6 +43,21 @@ NB transaction fee it's a variable amount, something around 190.000 lovelace
 9. Create a cip72 metadata file.
 10. Launch **cip72-cli** and follow the instructions\
     `$ yarn start`
+
+### Restore a wallet using existing keys
+
+If you have your `payment.skey`, `payment.vkey`, `stake.skey` and `stake.vkey`, then you can follow these steps
+
+1. Create a payment address `$ cardano-cli address build --payment-verification-key-file payment.vkey --stake-verification-key-file stake.vkey --out-file payment.addr`
+2. Retrieves the node’s current pool parameters `$ cardano-cli query protocol-parameters --out-file protocol.json (--mainnet | --testnet-magic NATURAL)`
+3. Query tip `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
+4. Install packages\
+   `$ yarn install`
+5. Copy .env_example to .end and edit it accordingly\
+   `$ cp .env_example .env`
+6. Create a cip72 metadata file.
+7. Launch **cip72-cli** and follow the instructions\
+   `$ yarn start`
 
 ### Testnet-magic numbers
 - 9: Devnet. 	`--testnet-magic=9`

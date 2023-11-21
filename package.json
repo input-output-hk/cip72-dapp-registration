@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon --watch src --watch bin bin/index.js",
     "start": "node bin/index.js",
-    "setup-mnemonic-wallet": "./scripts/setup-mnemonic-wallet.sh",
+    "restore-mnemonic-wallet": "./scripts/restore-mnemonic-wallet.sh",
     "setup-new-wallet": "./scripts/setup-new-wallet.sh"
   },
   "dependencies": {
