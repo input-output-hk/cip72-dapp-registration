@@ -89,7 +89,7 @@ const askQuestions1 = () => {
       message: "Comment your change (optional):"
     },
     {
-      name: "_offChainStoragePath",
+      name: "_metadataUrl",
       type: "input",
       message: "What's the offchain metadata url?",
     },
@@ -141,10 +141,10 @@ const run = async () => {
     console.log(chalk.yellowBright.bgBlue.bold(_.pad("Metadata.json generation", PAD_END_SIZE)));
     console.log(chalk.yellowBright.bgBlue.bold(_.padEnd('-', PAD_END_SIZE, '-')))
     const answers1 = await askQuestions1();
-    const { _metadataFilePath, _actionType, _comment, _offChainStoragePath, _cipJsonFilePath } = answers1;
+    const { _metadataFilePath, _actionType, _comment, _metadataUrl, _cipJsonFilePath } = answers1;
     const _rootHash = calculateRootHash(_cipJsonFilePath)
     console.log(chalk.yellowBright.bgBlue.bold(_.pad(`Calculated rootHash: ${_rootHash}`, PAD_END_SIZE)))
-    const out2 = generateMetadataJsonFile(_cipJsonFilePath, _metadataFilePath, _actionType, _comment, _offChainStoragePath, _rootHash)
+    const out2 = generateMetadataJsonFile(_cipJsonFilePath, _metadataFilePath, _actionType, _comment, _metadataUrl, _rootHash)
     if (out2 === true) console.log(chalk.yellowBright.bgBlue.bold(_.pad(`Metadata.json generated: ${_metadataFilePath}`, PAD_END_SIZE)))
 
     // ask questions2: on-chain submission
