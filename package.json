@@ -5,13 +5,10 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev_old": "nodemon --watch src src/index.js",
     "dev": "nodemon --watch src --watch bin bin/index.js",
     "start": "node bin/index.js",
-    "generate-json-files": "node src/index.js",
-    "generate-key-pair": "node src/generateKeyPair.js",
-    "submit-tx": "node src/submitTransaction.js",
-    "calculate-root-hash": "nodemon src/calculateRootHash.js"
+    "restore-mnemonic-wallet": "./scripts/restore-mnemonic-wallet.sh",
+    "setup-new-wallet": "./scripts/setup-new-wallet.sh"
   },
   "dependencies": {
     "axios": "^1.2.3",
