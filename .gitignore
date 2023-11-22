@@ -104,6 +104,7 @@ dist
 .tern-port
 
 .DS_Store
+.idea
 
 payment.*
 protocol.json

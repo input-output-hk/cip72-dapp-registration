@@ -1,4 +1,5 @@
 import { exec } from "child_process"
+import { rimraf } from "rimraf";
 
 const getNet = (net) => {
     let _net = '';
@@ -51,6 +52,7 @@ const queryUTXO = (walletAddress, net = 'preview') => {
         });
     });
 }
+
 // **********************************************************************************************************
 const createDraftTransaction = (walletAddress, metadataFilePath, TxHash, TxIx) => {
     return new Promise((resolve, reject) => {
@@ -132,7 +134,7 @@ const buildRealTransaction = (walletAddress, metadataFilePath, TxHash, TxIx, fee
 }
 
 // **********************************************************************************************************
-const signdRealTransaction = (paymentSkeyFilePath, net = 'preview') => {
+const signedRealTransaction = (paymentSkeyFilePath, net = 'preview') => {
     return new Promise((resolve, reject) => {
         exec(`cardano-cli transaction sign \
         --tx-body-file tx.draft \
@@ -168,4 +170,25 @@ const submitTransaction = (net = 'preview') => {
     });
 }
 
-export { queryUTXO, createDraftTransaction, calculateTransactionFee, buildRealTransaction, signdRealTransaction, submitTransaction }
+const getSignedTxTransactionId = () => {
+    return new Promise((resolve, reject) => {
+        exec(`cardano-cli transaction txid --tx-file tx.signed`, (error, stdout, stderr) => {
+            if (error) {
+                reject(error.message)
+                return;
+            }
+            if (stderr) {
+                reject(stderr)
+                return;
+            }
+            resolve(stdout)
+        });
+    });
+}
+
+const cleanupTransactionFiles = () => rimraf(['tx.draft', 'tx.signed']);
+
+export {
+    queryUTXO, createDraftTransaction, calculateTransactionFee, buildRealTransaction, signedRealTransaction,
+    submitTransaction, cleanupTransactionFiles, getSignedTxTransactionId
+}
