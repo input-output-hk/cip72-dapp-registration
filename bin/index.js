@@ -19,9 +19,10 @@ import {
 
 dotenv.config();
 
+const METADATA_FILE_PATH = "metadata.json";
+
 const walletAddress = process.env.WALLET_ADDRESS;
 const cipJsonFilePath = process.env.CIP_JSON_FILE_PATH;
-const metadataFilePath = process.env.METADATA_FILE_PATH;
 const protocolFilePath = process.env.PROTOCOL_FILE_PATH;
 const paymentSkeyFilePath = process.env.PAYMENT_SKEY_FILE_PATH;
 const net = process.env.NET;
@@ -69,12 +70,6 @@ const askQuestions1 = () => {
       type: "input",
       message: "CIP-72 json path/file-name?",
       default: cipJsonFilePath
-    },
-    {
-      name: "_metadataFilePath",
-      type: "input",
-      message: "What's the metadata file name?",
-      default: metadataFilePath
     },
     {
       type: 'list',
@@ -141,11 +136,11 @@ const run = async () => {
     console.log(chalk.yellowBright.bgBlue.bold(_.pad("Metadata.json generation", PAD_END_SIZE)));
     console.log(chalk.yellowBright.bgBlue.bold(_.padEnd('-', PAD_END_SIZE, '-')))
     const answers1 = await askQuestions1();
-    const { _metadataFilePath, _actionType, _comment, _metadataUrl, _cipJsonFilePath } = answers1;
+    const { _actionType, _comment, _metadataUrl, _cipJsonFilePath } = answers1;
     const _rootHash = calculateRootHash(_cipJsonFilePath)
     console.log(chalk.yellowBright.bgBlue.bold(_.pad(`Calculated rootHash: ${_rootHash}`, PAD_END_SIZE)))
-    const out2 = generateMetadataJsonFile(_cipJsonFilePath, _metadataFilePath, _actionType, _comment, _metadataUrl, _rootHash)
-    if (out2 === true) console.log(chalk.yellowBright.bgBlue.bold(_.pad(`Metadata.json generated: ${_metadataFilePath}`, PAD_END_SIZE)))
+    const out2 = generateMetadataJsonFile(_cipJsonFilePath, METADATA_FILE_PATH, _actionType, _comment, _metadataUrl, _rootHash)
+    if (out2 === true) console.log(chalk.yellowBright.bgBlue.bold(_.pad(`Metadata.json generated: ${METADATA_FILE_PATH}`, PAD_END_SIZE)))
 
     // ask questions2: on-chain submission
     console.log();
@@ -163,7 +158,7 @@ const run = async () => {
 
     console.log();
     console.log(chalk.black.bgGreenBright.bold(_.padEnd(`Creating transaction draft...`, PAD_END_SIZE)))
-    await createDraftTransaction(_walletAddress, _metadataFilePath, TxHash, TxIx)
+    await createDraftTransaction(_walletAddress, METADATA_FILE_PATH, TxHash, TxIx)
     console.log(chalk.black.bgGreenBright.bold(_.padEnd(`- Transaction draft created!`, PAD_END_SIZE)))
 
     console.log();
@@ -174,7 +169,7 @@ const run = async () => {
 
     console.log();
     console.log(chalk.black.bgGreenBright.bold(_.padEnd(`Building transaction...`, PAD_END_SIZE)))
-    await buildRealTransaction(_walletAddress, _metadataFilePath, TxHash, TxIx, fee, finalAmount);
+    await buildRealTransaction(_walletAddress, METADATA_FILE_PATH, TxHash, TxIx, fee, finalAmount);
     console.log(chalk.black.bgGreenBright.bold(_.padEnd(`- Transaction built!`, PAD_END_SIZE)))
 
     console.log();
