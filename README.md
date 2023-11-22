@@ -21,8 +21,8 @@ NB transaction fee it's a variable amount, something around 190.000 lovelace
 `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
 5. Install packages\
 `$ yarn install`
-6. Copy .env_example to .end and edit it accordingly\
-`$ cp .env_example .env`
+6. Copy .env.example to .end and edit it accordingly\
+`$ cp .env.example .env`
 7. Create a cip72 metadata file.
 8. Launch **cip72-cli** and follow the instructions\
 `$ yarn start`
@@ -32,14 +32,14 @@ NB transaction fee it's a variable amount, something around 190.000 lovelace
 1. Make sure you have `bech32` and `cardano-address` installed. You can test with `bech32 -v` and `cardano-address -v` or install using `cabal install bech32 cardano-address`
 2. Create `phrase.prv` file and fill it up with your mnemonic in space seperated format.
 3. Grant script permission to run `chmod +x ./scripts/restore-mnemonic-wallet.sh`
-4. Setup mnemonic wallet by running `yarn restore-mnemonic-wallet`
+4. Restore mnemonic wallet by running `yarn restore-mnemonic-wallet`
 5. Make sure your wallet has test ADA for transaction fee
 6. Query tip\
    `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
 7. Install packages\
    `$ yarn install`
-8. Copy .env_example to .end and edit it accordingly\
-   `$ cp .env_example .env`
+8. Copy .env.example to .end and edit it accordingly\
+   `$ cp .env.example .env`
 9. Create a cip72 metadata file.
 10. Launch **cip72-cli** and follow the instructions\
     `$ yarn start`
@@ -53,8 +53,8 @@ If you have your `payment.skey`, `payment.vkey`, `stake.skey` and `stake.vkey`, 
 3. Query tip `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
 4. Install packages\
    `$ yarn install`
-5. Copy .env_example to .end and edit it accordingly\
-   `$ cp .env_example .env`
+5. Copy .env.example to .end and edit it accordingly\
+   `$ cp .env.example .env`
 6. Create a cip72 metadata file.
 7. Launch **cip72-cli** and follow the instructions\
    `$ yarn start`
@@ -63,6 +63,9 @@ If you have your `payment.skey`, `payment.vkey`, `stake.skey` and `stake.vkey`, 
 - 9: Devnet. 	`--testnet-magic=9`
 - 2: Preview. 	`--testnet-magic=2`
 - 1: Preprod. 	`--testnet-magic=1`
+
+### Cardano node socket port
+This script assumes that your `CARDANO_NODE_SOCKET_PORT` is set in your terminal environment. If not, you can set it in `.env` file.
 
 
 ### Useful commands
