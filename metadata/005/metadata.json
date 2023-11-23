@@ -1,1 +1,13 @@
-{"1667":{"subject":"FakeJpgStore-003","rootHash":"7accad357621b035f6d6b746e12908fca91a5dcf84a50a854fead109a0e0c502","metadata":["shorturl.at/aiM13"],"schema_version":"0.0.1","type":{"action":"REGISTER","releaseNumber":"0.0.1","releaseName":"My first release"},"signature":{"r":"5f17ab265d75b9900462ca3b24ba0d4dc1506bf3e6ce79806a0fc074f572cd09","s":"204918f654da427af3c865fbbb053976d6032eca025f47286ba1652bdb557801","algo":"Ed25519−EdDSA","pub":"9b4139c173fd74898d4a562ef38adf56d49985fc749fe41149bad9a74006e55c"}}}
+{
+  "1667": {
+    "subject": "FakeBlockfrost-003",
+    "rootHash": "f1b11b847869028601f6345546deb5b7d7ddebab15e28641739e2a52a23fb506",
+    "metadata": [
+      "shorturl.at/aiM13"
+    ],
+    "type": {
+      "action": "REGISTER",
+      "comment": "My first release"
+    }
+  }
+}

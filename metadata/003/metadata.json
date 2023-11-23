@@ -1,1 +1,13 @@
-{"1667":{"subject":"FakeArtano-003","rootHash":"6613ca930085dbc83fb26b2f3e7f8739cb996f0a24e089421d82a71ae3d035cb","metadata":["shorturl.at/vQRV9"],"schema_version":"0.0.1","type":{"action":"REGISTER","releaseNumber":"0.0.1","releaseName":"My first release"},"signature":{"r":"98cdbbbcc76d06f4aa64505da31177f21c6a925240ca4ea5c255bd0775844fec","s":"9a9ca4710022511ea4065787099e7560093e0ca7974f683da31c96fb7c1b1c0c","algo":"Ed25519−EdDSA","pub":"9b4139c173fd74898d4a562ef38adf56d49985fc749fe41149bad9a74006e55c"}}}
+{
+  "1667": {
+    "subject": "FakeArtano-003",
+    "rootHash": "06ed0375cac2ef335dc7c81520ea9cbd6e439abc2b23a510fe4c7edb7c6220f8",
+    "metadata": [
+      "shorturl.at/vQRV9"
+    ],
+    "type": {
+      "action": "REGISTER",
+      "comment": "My first release"
+    }
+  }
+}
