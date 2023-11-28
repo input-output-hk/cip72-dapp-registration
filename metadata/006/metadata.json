@@ -1,1 +1,13 @@
-{"1667":{"subject":"FakeSundaySwap-003","rootHash":"1856f9528e7a67958f52c14376a0374e911ea70869b374f9e8ba3a023c4bb145","metadata":["shorturl.at/dejoC"],"schema_version":"0.0.1","type":{"action":"REGISTER","releaseNumber":"0.0.1","releaseName":"My first release"},"signature":{"r":"fd9d34429fc3ad8749250c632fa7d541b3a44d9a76e57a1f3d2da3126f64ee0b","s":"edd5112f600e695cb50a98e35bb4cd66d8b4369710f4498e94ac4b00b95f050b","algo":"Ed25519−EdDSA","pub":"9b4139c173fd74898d4a562ef38adf56d49985fc749fe41149bad9a74006e55c"}}}
+{
+  "1667": {
+    "subject": "FakeSundaySwap-003",
+    "rootHash": "235b7c3eaa2998be10c3732ae2defbaa1cb1caffbf0cad4a3912f13bc0b4c448",
+    "metadata": [
+      "shorturl.at/dejoC"
+    ],
+    "type": {
+      "action": "REGISTER",
+      "comment": "My first release"
+    }
+  }
+}
