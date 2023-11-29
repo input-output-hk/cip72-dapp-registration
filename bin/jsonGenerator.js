@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import blake2 from 'blake2';
 import nacl from 'tweetnacl';
 import fs from "fs";
-import jsonKeysSort from 'json-keys-sort';
+import canonicalize from 'canonicalize';
 import * as util from 'tweetnacl-util';
 nacl.util = util;
 
@@ -29,10 +29,10 @@ const splitString = (value) => {
 
 const calculateRootHash = (cipFilePath) => {
   const rawdata = fs.readFileSync(cipFilePath);
-  const cip = JSON.parse(rawdata);
-  const sortedCip = jsonKeysSort.sort(cip)
+  const dappMetadata = JSON.parse(rawdata);
+  const canonicalizedJson = canonicalize(dappMetadata)
   const _hash = blake2.createHash('blake2b', { digestLength: 32 });
-  return _hash.update(Buffer.from(JSON.stringify(sortedCip))).digest('hex')
+  return _hash.update(Buffer.from(JSON.stringify(canonicalizedJson))).digest('hex')
 }
 
 // **********************************************************************************************************

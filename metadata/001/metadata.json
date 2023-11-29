@@ -1,13 +1,15 @@
 {
   "1667": {
-    "subject": "FakeNMKR-003",
-    "rootHash": "4bf9ce9fa29f8b0a49e6fdd2e88a0af64b1dd3c18d10020e66a96d039084fc30",
+    "subject": "FakeRayWallet-003",
+    "rootHash": "a53be397ab8ab2a06e9b3339e1cf7acd1c5b7810234fb4456bc9891b99ba881f",
     "metadata": [
-      "shorturl.at/dqC28"
+      "https://gist.githubusercontent.com/greatertomi/8f440d670e4718242",
+      "ab120a7a12dacb8/raw/5882e28d48e9c022968473e7757bde1b8ec56bec/cip",
+      "72.json"
     ],
     "type": {
       "action": "REGISTER",
-      "comment": "My first release"
+      "comment": "Register"
     }
   }
 }
