@@ -32,7 +32,7 @@ const calculateRootHash = (cipFilePath) => {
   const dappMetadata = JSON.parse(rawdata);
   const canonicalizedJson = canonicalize(dappMetadata)
   const _hash = blake2.createHash('blake2b', { digestLength: 32 });
-  return _hash.update(Buffer.from(JSON.stringify(canonicalizedJson))).digest('hex')
+  return _hash.update(Buffer.from(canonicalizedJson)).digest('hex')
 }
 
 // **********************************************************************************************************
