@@ -111,3 +111,4 @@ protocol.json
 stake.*
 tx.*
 phrase.prv
+metadata.json
