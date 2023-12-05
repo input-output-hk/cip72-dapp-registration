@@ -7,7 +7,7 @@ import figlet from "figlet";
 import _ from "lodash";
 
 import {
-  calculateRootHash,
+  fetchAndParseMetadata,
   generateMetadataJsonFile,
 } from "./jsonGenerator.js";
 import {
@@ -42,7 +42,6 @@ const init = () => {
   console.log(
     chalk.green(
       figlet.textSync(`CIP-72 CLI`, {
-        // font: "Ghost",
         horizontalLayout: "default",
         verticalLayout: "default",
       }),
@@ -141,7 +140,7 @@ const run = async () => {
     );
     const answers1 = await askQuestions1();
     const { _actionType, _comment, _metadataUrl } = answers1;
-    const { rootHash, metadata } = await calculateRootHash(_metadataUrl);
+    const { rootHash, metadata } = await fetchAndParseMetadata(_metadataUrl);
     console.log(
       chalk.yellowBright.bgBlue.bold(
         _.pad(`Calculated rootHash: ${rootHash}`, PAD_END_SIZE),

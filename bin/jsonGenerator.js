@@ -7,7 +7,7 @@ import * as util from "tweetnacl-util";
 import axios, { isAxiosError } from "axios";
 import _ from "lodash";
 import Ajv from "ajv";
-import schema from "./cip72Schema.json" assert { type: "json" };
+import schema from "./offChainDataSchema.json" assert { type: "json" };
 
 nacl.util = util;
 
@@ -61,18 +61,22 @@ const validateMetadata = async (metadata) => {
   return true;
 };
 
-const calculateRootHash = async (metadataUrl) => {
+const calculateRootHash = (dappMetadata) => {
+  const canonicalizedJson = canonicalize(dappMetadata);
+  const _hash = blake2.createHash("blake2b", { digestLength: 32 });
+  return _hash.update(Buffer.from(canonicalizedJson)).digest("hex");
+};
+
+const fetchAndParseMetadata = async (metadataUrl) => {
   try {
     if (!metadataUrl) {
       throw new Error("metadata url is required");
     }
     const dappMetadata = await fetchMetadata(metadataUrl);
     await validateMetadata(dappMetadata);
-    const canonicalizedJson = canonicalize(dappMetadata);
-    const _hash = blake2.createHash("blake2b", { digestLength: 32 });
     return {
       metadata: dappMetadata,
-      rootHash: _hash.update(Buffer.from(canonicalizedJson)).digest("hex"),
+      rootHash: calculateRootHash(dappMetadata),
     };
   } catch (error) {
     throw error;
@@ -110,4 +114,4 @@ const generateMetadataJsonFile = (
   }
 };
 
-export { calculateRootHash, generateMetadataJsonFile };
+export { fetchAndParseMetadata, generateMetadataJsonFile };
