@@ -68,19 +68,15 @@ const calculateRootHash = (dappMetadata) => {
 };
 
 const fetchAndParseMetadata = async (metadataUrl) => {
-  try {
-    if (!metadataUrl) {
-      throw new Error("metadata url is required");
-    }
-    const dappMetadata = await fetchMetadata(metadataUrl);
-    await validateMetadata(dappMetadata);
-    return {
-      metadata: dappMetadata,
-      rootHash: calculateRootHash(dappMetadata),
-    };
-  } catch (error) {
-    throw error;
+  if (!metadataUrl) {
+    throw new Error("metadata url is required");
   }
+  const dappMetadata = await fetchMetadata(metadataUrl);
+  await validateMetadata(dappMetadata);
+  return {
+    metadata: dappMetadata,
+    rootHash: calculateRootHash(dappMetadata),
+  };
 };
 
 const generateMetadataJsonFile = (
