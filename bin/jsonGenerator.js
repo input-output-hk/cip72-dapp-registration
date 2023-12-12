@@ -98,7 +98,7 @@ const generateMetadataJsonFile = (
         metadata: offChainStoragePathArray,
         type: {
           action: actionType,
-          comment,
+          ...(comment && { comment }),
         },
       },
     };
