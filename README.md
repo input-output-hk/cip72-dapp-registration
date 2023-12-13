@@ -3,6 +3,10 @@
 ## Set up cardano-cli
 [https://github.com/piotr-iohk/cardano-up](https://github.com/piotr-iohk/cardano-up)
 
+## Set up local node or use blockfrost.io
+1. For local node setup -> [https://github.com/piotr-iohk/cardano-up](https://github.com/piotr-iohk/cardano-up)
+2. For getting a blockfrost key -> [https://blockfrost.io/](https://blockfrost.io/)
+
 
 ## Set up wallet
 
