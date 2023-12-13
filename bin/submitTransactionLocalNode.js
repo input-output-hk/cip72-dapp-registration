@@ -27,7 +27,7 @@ const getNet = (net) => {
   return _net;
 };
 
-const queryUTXO = (walletAddress, net = "preview") => {
+const queryUTXO = async (walletAddress, net = "preview") => {
   return new Promise((resolve, reject) => {
     exec(
       `cardano-cli query utxo \
@@ -174,7 +174,7 @@ const signedRealTransaction = (paymentSkeyFilePath, net = "preview") => {
   });
 };
 
-const submitTransaction = (net = "preview") => {
+const submitTransaction = async (net = "preview") => {
   return new Promise((resolve, reject) => {
     exec(
       `cardano-cli transaction submit --tx-file tx.signed ${getNet(net)}`,

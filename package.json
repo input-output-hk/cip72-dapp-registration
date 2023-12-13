@@ -9,9 +9,9 @@
     "start": "node bin/index.js",
     "restore-mnemonic-wallet": "./scripts/restore-mnemonic-wallet.sh",
     "setup-new-wallet": "./scripts/setup-new-wallet.sh"
-
   },
   "dependencies": {
+    "@blockfrost/blockfrost-js": "^5.4.0",
     "ajv": "^8.12.0",
     "axios": "^1.6.2",
     "blake2": "^4.1.1",

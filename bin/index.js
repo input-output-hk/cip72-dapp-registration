@@ -19,7 +19,7 @@ import {
   submitTransaction,
   cleanupTransactionFiles,
   getSignedTxTransactionId,
-} from "./submitTransaction.js";
+} from "./submitTransactionLocalNode.js";
 
 dotenv.config();
 
@@ -29,6 +29,7 @@ const walletAddress = process.env.WALLET_ADDRESS;
 const protocolFilePath = process.env.PROTOCOL_FILE_PATH;
 const paymentSkeyFilePath = process.env.PAYMENT_SKEY_FILE_PATH;
 const net = process.env.NET;
+const blockfrostApiKeyPreview = process.env.BLOCKFROST_API_KEY_PREVIEW;
 const PAD_END_SIZE = 150;
 
 Object.defineProperty(String.prototype, "capitalize", {
@@ -274,7 +275,7 @@ const run = async () => {
       ),
     );
     await submitTransaction(_net);
-    const txId = await getSignedTxTransactionId(_net);
+    const txId = await getSignedTxTransactionId();
     console.log(
       chalk.black.bgGreenBright.bold(
         _.padEnd(`- Transaction submitted!`, PAD_END_SIZE),
