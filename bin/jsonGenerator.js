@@ -1,13 +1,13 @@
-import dotenv from "dotenv";
-import blake2 from "blake2";
-import nacl from "tweetnacl";
-import fs from "fs";
-import canonicalize from "canonicalize";
-import * as util from "tweetnacl-util";
-import axios, { isAxiosError } from "axios";
-import _ from "lodash";
-import Ajv from "ajv";
-import schema from "./offChainDataSchema.json" assert { type: "json" };
+import dotenv from 'dotenv';
+import blake2 from 'blake2';
+import nacl from 'tweetnacl';
+import fs from 'fs';
+import canonicalize from 'canonicalize';
+import * as util from 'tweetnacl-util';
+import axios, { isAxiosError } from 'axios';
+import _ from 'lodash';
+import Ajv from 'ajv';
+import schema from './offChainDataSchema.json' assert { type: "json" };
 
 nacl.util = util;
 
@@ -17,7 +17,7 @@ dotenv.config();
 
 const splitString = (value) => {
   if (value.length === 0) {
-    return [""];
+    return [''];
   }
 
   const substrings = [];
@@ -30,11 +30,11 @@ const splitString = (value) => {
 
 const fetchMetadata = async (metadataUrl) => {
   try {
-    console.log("Fetching metadata...");
+    console.log('Fetching metadata...');
     const res = await axios.get(metadataUrl);
     const metadata = res.data;
     if (!_.isObject(metadata) || _.isEmpty(metadata)) {
-      throw new Error("Invalid metadata");
+      throw new Error('Invalid metadata');
     }
     return metadata;
   } catch (error) {
@@ -51,7 +51,7 @@ const validateMetadata = async (metadata) => {
   const validate = ajv.compile(schema);
   const valid = validate(metadata);
   if (!valid) {
-    const errors = validate.errors;
+    const { errors } = validate;
     throw new Error(
       `Invalid metadata: ${errors.map(
         (error) => `${error.instancePath} ${error.message}`,
@@ -63,13 +63,13 @@ const validateMetadata = async (metadata) => {
 
 const calculateRootHash = (dappMetadata) => {
   const canonicalizedJson = canonicalize(dappMetadata);
-  const _hash = blake2.createHash("blake2b", { digestLength: 32 });
-  return _hash.update(Buffer.from(canonicalizedJson)).digest("hex");
+  const hash = blake2.createHash('blake2b', { digestLength: 32 });
+  return hash.update(Buffer.from(canonicalizedJson)).digest('hex');
 };
 
 const fetchAndParseMetadata = async (metadataUrl) => {
   if (!metadataUrl) {
-    throw new Error("metadata url is required");
+    throw new Error('metadata url is required');
   }
   const dappMetadata = await fetchMetadata(metadataUrl);
   await validateMetadata(dappMetadata);

@@ -18,6 +18,7 @@
     "canonicalize": "^2.0.0",
     "cbor": "^8.1.0",
     "chalk": "^5.2.0",
+    "dotenv": "^16.0.3",
     "figlet": "^1.5.2",
     "inquirer": "^9.1.4",
     "lodash": "^4.17.21",
@@ -29,10 +30,12 @@
     "yargs": "^17.6.2"
   },
   "devDependencies": {
-    "dotenv": "^16.0.3",
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2",
     "esm": "^3.2.25",
     "nodemon": "^2.0.20",
-    "prettier": "^3.1.0"
+    "prettier": "^3.1.1"
   },
   "bin": {
     "cip72-cli": "./bin/index.js"
