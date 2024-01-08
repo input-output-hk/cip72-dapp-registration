@@ -1,5 +1,3 @@
-import process from 'node:process';
-
 import { readFile } from 'fs/promises';
 import { BlockFrostAPI } from '@blockfrost/blockfrost-js';
 
@@ -18,7 +16,7 @@ const queryUTxOviaBlockfrost = async (blockfrostKey, walletAddress) => {
   let txIx = 0;
   let amount = 0;
   for (const utxo of utxos) {
-    const sum = utxo?.amount.reduce((sum, item) => sum + parseInt(item?.quantity, 10), 0);
+    const sum = utxo?.amount.reduce((acc, item) => acc + parseInt(item?.quantity, 10), 0);
     if (sum > 1000000) {
       txHash = utxo?.tx_hash;
       txIx = utxo?.output_index;
@@ -30,7 +28,8 @@ const queryUTxOviaBlockfrost = async (blockfrostKey, walletAddress) => {
 
 /**
  *
- * @param {string} blockfrostKey - Blockfrost key for the transaction. Beware that blockfrost key is different for different testnets and mainnet
+ * @param {string} blockfrostKey - Blockfrost key for the transaction.
+ * Beware that blockfrost key is different for different testnets and mainnet
  * @returns {string} transaction id with which transaction can be found on any cardano explorer.
  */
 const submitTransactionViaBlockfrost = async (blockfrostKey) => {
@@ -38,19 +37,22 @@ const submitTransactionViaBlockfrost = async (blockfrostKey) => {
     projectId: blockfrostKey
   });
   const tx = await readFile('./tx.signed', { encoding: 'binary' });
-  const cbor_hex = JSON.parse(tx)?.cborHex;
-  return await blockfrost?.txSubmit(cbor_hex);
+  const cborHex = JSON.parse(tx)?.cborHex;
+  return blockfrost?.txSubmit(cborHex);
 };
 
 /**
  *
- * @param {string} blockfrostKey - Blockfrost key for the transaction. Beware that blockfrost key is different for different testnets and mainnet
+ * @param {string} blockfrostKey - Blockfrost key for the transaction.
+ * Beware that blockfrost key is different for different testnets and mainnet
  * @param {string} net - network name based on the blockfrost key
  * @return {string} network name based on the blockfrost key
  */
 const validateBlockfrostKey = (net, blockfrostKey) => {
   if (!blockfrostKey.includes(net)) {
-    throw new Error(`Network and blockfrost key mismatch! Kindly check your blockfrost key and network.`);
+    throw new Error(
+      'Network and blockfrost key mismatch! Kindly check your blockfrost key and network.'
+    );
   }
 };
 

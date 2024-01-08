@@ -7,7 +7,9 @@ import * as util from 'tweetnacl-util';
 import axios, { isAxiosError } from 'axios';
 import _ from 'lodash';
 import Ajv from 'ajv';
-import schema from './offChainDataSchema.json' assert { type: "json" };
+
+// eslint-disable-next-line
+import schema from './offChainDataSchema.json' assert { type: 'json' };
 
 nacl.util = util;
 
@@ -53,9 +55,7 @@ const validateMetadata = async (metadata) => {
   if (!valid) {
     const { errors } = validate;
     throw new Error(
-      `Invalid metadata: ${errors.map(
-        (error) => `${error.instancePath} ${error.message}`,
-      )}`,
+      `Invalid metadata: ${errors.map((error) => `${error.instancePath} ${error.message}`)}`
     );
   }
   return true;
@@ -75,7 +75,7 @@ const fetchAndParseMetadata = async (metadataUrl) => {
   await validateMetadata(dappMetadata);
   return {
     metadata: dappMetadata,
-    rootHash: calculateRootHash(dappMetadata),
+    rootHash: calculateRootHash(dappMetadata)
   };
 };
 
@@ -85,7 +85,7 @@ const generateMetadataJsonFile = (
   comment,
   metadataUrl,
   cipRootHash,
-  metadata,
+  metadata
 ) => {
   try {
     const { subject } = metadata;
@@ -98,9 +98,9 @@ const generateMetadataJsonFile = (
         metadata: offChainStoragePathArray,
         type: {
           action: actionType,
-          ...(comment && { comment }),
-        },
-      },
+          ...(comment && { comment })
+        }
+      }
     };
 
     fs.writeFileSync(metadataFilePath, JSON.stringify(metadataJson));

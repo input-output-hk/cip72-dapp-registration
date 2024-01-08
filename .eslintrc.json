@@ -12,13 +12,11 @@
         "import/prefer-default-export": "off",
         "unicorn/no-null": "off",
         "unicorn/prevent-abbreviations": "off",
-        "no-console": "warn",
+        "no-console": "off",
         "no-restricted-syntax": "off",
         "import/no-extraneous-dependencies": "off",
         "spaced-comment": "off",
-        "import/extensions": {
-            "js": "always",
-            "json": "always"
-        }
+        "comma-dangle": "off",
+        "import/extensions": "off"
     }
 }

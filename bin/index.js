@@ -31,6 +31,7 @@ const METADATA_FILE_PATH = 'metadata.json';
 let blockfrostApiKey = process.env.BLOCKFROST_API_KEY;
 let net = process.env.NET;
 
+// eslint-disable-next-line no-extend-native
 Object.defineProperty(String.prototype, 'capitalize', {
   value() {
     return this.charAt(0).toUpperCase() + this.slice(1);
@@ -89,9 +90,8 @@ try {
 
   const { walletAddress, protocolFilePath, paymentSkeyFilePath } = await askTransactionQuestions();
 
-  const { txHash, txIx, amount } = await queryUTxO(walletAddress, net, blockfrostApiKey);
+  const { txHash, txIx, amount } = await queryUTxO(walletAddress, blockfrostApiKey, net);
 
-  console.log();
   drawInfo(chalk.black.bgGreenBright.bold, `- Last UTXO TxHash: ${txHash}`);
   drawInfo(chalk.black.bgGreenBright.bold, `- Last UTXO TxIx: ${txIx}`);
   drawInfo(chalk.black.bgGreenBright.bold, `- Last UTXO Amount: ${amount}`);
@@ -101,7 +101,12 @@ try {
   drawInfo(chalk.black.bgGreenBright.bold, '- Transaction draft created!');
   drawInfo(chalk.black.bgGreenBright.bold, 'Calculating transaction fee...');
 
-  const { fee, finalAmount } = await calculateTransactionFee(protocolFilePath, amount, net, blockfrostApiKey);
+  const { fee, finalAmount } = await calculateTransactionFee(
+    protocolFilePath,
+    amount,
+    net,
+    blockfrostApiKey
+  );
   drawInfo(chalk.black.bgGreenBright.bold, `- Fee: ${fee}`);
   drawInfo(chalk.black.bgGreenBright.bold, `- Final wallet amount: ${finalAmount}`);
 
@@ -125,6 +130,5 @@ try {
   drawInfo(chalk.black.bgGreenBright.bold, 'Done!');
 } catch (error) {
   console.error('ERROR:', error);
-  console.log();
   drawError(error);
 }
