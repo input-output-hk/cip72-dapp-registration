@@ -12,18 +12,16 @@ const queryUTxOviaBlockfrost = async (blockfrostKey, walletAddress) => {
     projectId: blockfrostKey
   });
   const utxos = await blockfrost.addressesUtxosAll(walletAddress);
-  let txHash = '';
-  let txIx = 0;
-  let amount = 0;
-  for (const utxo of utxos) {
+  const {
+    tx_hash: txHash = '',
+    tx_index: txIx = 0,
+    amount = []
+  } = utxos.find((utxo) => {
     const sum = utxo?.amount.reduce((acc, item) => acc + parseInt(item?.quantity, 10), 0);
-    if (sum > 1000000) {
-      txHash = utxo?.tx_hash;
-      txIx = utxo?.output_index;
-      amount = sum;
-    }
-  }
-  return { txHash, txIx, amount };
+    return sum > 1000000;
+  });
+  const sum = amount.reduce((acc, item) => acc + parseInt(item?.quantity, 10), 0);
+  return { txHash, txIx, amount: sum };
 };
 
 /**
