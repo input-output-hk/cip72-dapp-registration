@@ -4,27 +4,24 @@ import dotenv from 'dotenv';
 import chalk from 'chalk';
 import figlet from 'figlet';
 
-import {
-  fetchAndParseMetadata,
-  generateMetadataJsonFile,
-} from './jsonGenerator.js';
+import { fetchAndParseMetadata, generateMetadataJsonFile } from './jsonGenerator.js';
 import {
   createDraftTransaction,
   calculateTransactionFee,
   buildRealTransaction,
   signedRealTransaction,
   cleanupTransactionFiles,
-  getSignedTxTransactionId,
+  getSignedTxTransactionId
 } from './cardanoCliUtils.js';
-import { inferNetFromBlockfrostKey } from './blockfrostUtils.js';
+import { validateBlockfrostKey } from './blockfrostUtils.js';
 import { queryUTxO, submitTransaction } from './submitTransaction.js';
 
 import {
-  networkQuestion,
-  metadataQuestions,
-  txQuestions,
-  nodeQuestions,
-  blockfrostQuestion,
+  askNetworkQuestion,
+  askMetadataQuestions,
+  askTransactionQuestions,
+  askNodeQuestion,
+  askBlockfrostQuestion
 } from './questions.js';
 import { drawQuestionHeader, drawInfo, drawError } from './cliDrawings.js';
 
@@ -38,7 +35,7 @@ Object.defineProperty(String.prototype, 'capitalize', {
   value() {
     return this.charAt(0).toUpperCase() + this.slice(1);
   },
-  enumerable: false,
+  enumerable: false
 });
 
 const init = () => {
@@ -46,131 +43,88 @@ const init = () => {
     chalk.green(
       figlet.textSync('CIP-72 CLI - Testnet', {
         horizontalLayout: 'default',
-        verticalLayout: 'default',
-      }),
-    ),
+        verticalLayout: 'default'
+      })
+    )
   );
 };
 
-const nodeAnswer = () => nodeQuestions();
-const blockfrostAnswer = () => blockfrostQuestion();
-const networkAnswer = () => networkQuestion();
-const metadataAnswer = () => metadataQuestions();
-const txAnswers = () => txQuestions();
+try {
+  init();
 
-const run = async () => {
-  try {
-    init();
+  drawQuestionHeader(chalk.black.bgMagenta.bold, 'Choose node');
+  const { node } = await askNodeQuestion();
 
-    drawQuestionHeader(chalk.black.bgMagenta.bold, 'Choose node');
-    const { _node } = await nodeAnswer();
+  drawQuestionHeader(chalk.black.bgMagenta.bold, 'Choose network');
+  const { net: networkAnswer } = await askNetworkQuestion();
+  net = networkAnswer;
 
-    if (_node === 'blockfrost') {
-      if (!blockfrostApiKey) {
-        drawInfo(
-          chalk.yellowBright.bgBlue.bold,
-          'Blockfrost API key is missing!',
-        );
-        const { _blockfrostApiKey } = await blockfrostAnswer();
-        blockfrostApiKey = _blockfrostApiKey;
-        net = inferNetFromBlockfrostKey(blockfrostApiKey);
-      }
-    } else {
-      drawQuestionHeader(chalk.black.bgMagenta.bold, 'Choose network');
-      const { _net } = await networkAnswer();
-      net = _net;
+  if (node === 'blockfrost') {
+    if (!blockfrostApiKey) {
+      drawInfo(chalk.yellowBright.bgBlue.bold, 'Blockfrost API key is missing!');
+      const { blockfrostApiKey: blockfrostAnswer } = await askBlockfrostQuestion();
+      blockfrostApiKey = blockfrostAnswer;
     }
-
-    drawQuestionHeader(
-      chalk.yellowBright.bgBlue.bold,
-      'Metadata.json generation',
-    );
-    const { _actionType, _comment, _metadataUrl } = await metadataAnswer();
-    const { rootHash, metadata } = await fetchAndParseMetadata(_metadataUrl);
-    drawInfo(chalk.yellowBright.bgBlue.bold, `Calculated rootHash: ${rootHash}`);
-
-    const out2 = await generateMetadataJsonFile(
-      METADATA_FILE_PATH,
-      _actionType,
-      _comment,
-      _metadataUrl,
-      rootHash,
-      metadata,
-    );
-    if (out2 === true) {
-      drawInfo(
-        chalk.yellowBright.bgBlue.bold,
-        `Metadata.json generated: ${METADATA_FILE_PATH}`,
-      );
-    }
-
-    drawQuestionHeader(chalk.black.bgGreenBright.bold, 'Block-chain submission');
-
-    const { _walletAddress, _protocolFilePath, _paymentSkeyFilePath } = await txAnswers();
-
-    const { txHash, txIx, amount } = await queryUTxO(
-      _walletAddress,
-      net,
-      blockfrostApiKey,
-    );
-
-    console.log();
-    drawInfo(chalk.black.bgGreenBright.bold, `- Last UTXO TxHash: ${txHash}`);
-    drawInfo(chalk.black.bgGreenBright.bold, `- Last UTXO TxIx: ${txIx}`);
-    drawInfo(chalk.black.bgGreenBright.bold, `- Last UTXO Amount: ${amount}`);
-    drawInfo(chalk.black.bgGreenBright.bold, 'Creating transaction draft...');
-
-    await createDraftTransaction(
-      _walletAddress,
-      METADATA_FILE_PATH,
-      txHash,
-      txIx,
-    );
-    drawInfo(chalk.black.bgGreenBright.bold, '- Transaction draft created!');
-    drawInfo(chalk.black.bgGreenBright.bold, 'Calculating transaction fee...');
-
-    const { fee, finalAmount } = await calculateTransactionFee(
-      _protocolFilePath,
-      amount,
-      net,
-      blockfrostApiKey,
-    );
-    drawInfo(chalk.black.bgGreenBright.bold, `- Fee: ${fee}`);
-    drawInfo(
-      chalk.black.bgGreenBright.bold,
-      `- Final wallet amount: ${finalAmount}`,
-    );
-
-    drawInfo(chalk.black.bgGreenBright.bold, 'Building transaction...');
-    await buildRealTransaction(
-      _walletAddress,
-      METADATA_FILE_PATH,
-      txHash,
-      txIx,
-      fee,
-      finalAmount,
-    );
-    drawInfo(chalk.black.bgGreenBright.bold, '- Transaction built!');
-    drawInfo(chalk.black.bgGreenBright.bold, 'Signing transaction...');
-
-    await signedRealTransaction(_paymentSkeyFilePath, net);
-    drawInfo(chalk.black.bgGreenBright.bold, '- Transaction signed!');
-
-    drawInfo(chalk.black.bgGreenBright.bold, 'Submitting transaction...');
-
-    await submitTransaction(net, blockfrostApiKey);
-    const txId = await getSignedTxTransactionId();
-    drawInfo(chalk.black.bgGreenBright.bold, '- Transaction submitted!');
-    drawInfo(chalk.black.bgGreenBright.bold, `- Transaction ID: ${txId}`);
-
-    drawInfo(chalk.black.bgGreenBright.bold, 'Cleaning up transaction files...');
-    await cleanupTransactionFiles();
-    drawInfo(chalk.black.bgGreenBright.bold, 'Done!');
-  } catch (error) {
-    console.error('ERROR:', error);
-    console.log();
-    drawError(error);
+    net = validateBlockfrostKey(net, blockfrostApiKey);
   }
-};
 
-run();
+  drawQuestionHeader(chalk.yellowBright.bgBlue.bold, 'Metadata.json generation');
+  const { actionType, comment, metadataUrl } = await askMetadataQuestions();
+  const { rootHash, metadata } = await fetchAndParseMetadata(metadataUrl);
+  drawInfo(chalk.yellowBright.bgBlue.bold, `Calculated rootHash: ${rootHash}`);
+
+  const generatedJsonMetadata = await generateMetadataJsonFile(
+    METADATA_FILE_PATH,
+    actionType,
+    comment,
+    metadataUrl,
+    rootHash,
+    metadata
+  );
+  if (generatedJsonMetadata) {
+    drawInfo(chalk.yellowBright.bgBlue.bold, `Metadata.json generated: ${METADATA_FILE_PATH}`);
+  }
+
+  drawQuestionHeader(chalk.black.bgGreenBright.bold, 'Block-chain submission');
+
+  const { walletAddress, protocolFilePath, paymentSkeyFilePath } = await askTransactionQuestions();
+
+  const { txHash, txIx, amount } = await queryUTxO(walletAddress, net, blockfrostApiKey);
+
+  console.log();
+  drawInfo(chalk.black.bgGreenBright.bold, `- Last UTXO TxHash: ${txHash}`);
+  drawInfo(chalk.black.bgGreenBright.bold, `- Last UTXO TxIx: ${txIx}`);
+  drawInfo(chalk.black.bgGreenBright.bold, `- Last UTXO Amount: ${amount}`);
+  drawInfo(chalk.black.bgGreenBright.bold, 'Creating transaction draft...');
+
+  await createDraftTransaction(walletAddress, METADATA_FILE_PATH, txHash, txIx);
+  drawInfo(chalk.black.bgGreenBright.bold, '- Transaction draft created!');
+  drawInfo(chalk.black.bgGreenBright.bold, 'Calculating transaction fee...');
+
+  const { fee, finalAmount } = await calculateTransactionFee(protocolFilePath, amount, net, blockfrostApiKey);
+  drawInfo(chalk.black.bgGreenBright.bold, `- Fee: ${fee}`);
+  drawInfo(chalk.black.bgGreenBright.bold, `- Final wallet amount: ${finalAmount}`);
+
+  drawInfo(chalk.black.bgGreenBright.bold, 'Building transaction...');
+  await buildRealTransaction(walletAddress, METADATA_FILE_PATH, txHash, txIx, fee, finalAmount);
+  drawInfo(chalk.black.bgGreenBright.bold, '- Transaction built!');
+  drawInfo(chalk.black.bgGreenBright.bold, 'Signing transaction...');
+
+  await signedRealTransaction(paymentSkeyFilePath, net);
+  drawInfo(chalk.black.bgGreenBright.bold, '- Transaction signed!');
+
+  drawInfo(chalk.black.bgGreenBright.bold, 'Submitting transaction...');
+
+  await submitTransaction(net, blockfrostApiKey);
+  const txId = await getSignedTxTransactionId();
+  drawInfo(chalk.black.bgGreenBright.bold, '- Transaction submitted!');
+  drawInfo(chalk.black.bgGreenBright.bold, `- Transaction ID: ${txId}`);
+
+  drawInfo(chalk.black.bgGreenBright.bold, 'Cleaning up transaction files...');
+  await cleanupTransactionFiles();
+  drawInfo(chalk.black.bgGreenBright.bold, 'Done!');
+} catch (error) {
+  console.error('ERROR:', error);
+  console.log();
+  drawError(error);
+}

@@ -1,7 +1,7 @@
-import process from 'node:process'
+import process from 'node:process';
 
-import { readFile } from 'fs/promises'
-import { BlockFrostAPI } from '@blockfrost/blockfrost-js'
+import { readFile } from 'fs/promises';
+import { BlockFrostAPI } from '@blockfrost/blockfrost-js';
 
 /**
  *
@@ -11,29 +11,22 @@ import { BlockFrostAPI } from '@blockfrost/blockfrost-js'
  */
 const queryUTxOviaBlockfrost = async (blockfrostKey, walletAddress) => {
   const blockfrost = new BlockFrostAPI({
-    projectId: blockfrostKey,
-  })
-  const utxos = await blockfrost.addressesUtxosAll(walletAddress)
-  let txHash = ''
-  let txIx = 0
-  let amount = 0
+    projectId: blockfrostKey
+  });
+  const utxos = await blockfrost.addressesUtxosAll(walletAddress);
+  let txHash = '';
+  let txIx = 0;
+  let amount = 0;
   for (const utxo of utxos) {
-    if (
-      utxo?.amount.reduce(
-        (sum, item) => sum + parseInt(item?.quantity, 10),
-        0,
-      ) > 1000000
-    ) {
-      txHash = utxo?.tx_hash
-      txIx = utxo?.output_index
-      amount = utxo?.amount.reduce(
-        (sum, item) => sum + parseInt(item?.quantity, 10),
-        0,
-      )
+    const sum = utxo?.amount.reduce((sum, item) => sum + parseInt(item?.quantity, 10), 0);
+    if (sum > 1000000) {
+      txHash = utxo?.tx_hash;
+      txIx = utxo?.output_index;
+      amount = sum;
     }
   }
-  return { txHash, txIx, amount }
-}
+  return { txHash, txIx, amount };
+};
 
 /**
  *
@@ -42,33 +35,23 @@ const queryUTxOviaBlockfrost = async (blockfrostKey, walletAddress) => {
  */
 const submitTransactionViaBlockfrost = async (blockfrostKey) => {
   const blockfrost = new BlockFrostAPI({
-    projectId: blockfrostKey,
-  })
-  const tx = await readFile('./tx.signed', { encoding: 'binary' })
-  const cbor_hex = JSON.parse(tx)?.cborHex
-  return await blockfrost?.txSubmit(cbor_hex)
-}
+    projectId: blockfrostKey
+  });
+  const tx = await readFile('./tx.signed', { encoding: 'binary' });
+  const cbor_hex = JSON.parse(tx)?.cborHex;
+  return await blockfrost?.txSubmit(cbor_hex);
+};
 
 /**
  *
  * @param {string} blockfrostKey - Blockfrost key for the transaction. Beware that blockfrost key is different for different testnets and mainnet
+ * @param {string} net - network name based on the blockfrost key
  * @return {string} network name based on the blockfrost key
  */
-const inferNetFromBlockfrostKey = (blockfrostKey) => {
-  if (blockfrostKey.includes('preview')) {
-    return 'preview'
-  } else if (blockfrostKey.includes('preprod')) {
-    return 'preprod'
-  } else if (blockfrostKey.includes('mainnet')) {
-    return 'mainnet'
-  } else {
-    console.log('Wrong network! Allowed values: preview, preprod, mainnet')
-    process.exit(1)
+const validateBlockfrostKey = (net, blockfrostKey) => {
+  if (!blockfrostKey.includes(net)) {
+    throw new Error(`Network and blockfrost key mismatch! Kindly check your blockfrost key and network.`);
   }
-}
+};
 
-export {
-  inferNetFromBlockfrostKey,
-  queryUTxOviaBlockfrost,
-  submitTransactionViaBlockfrost,
-}
+export { validateBlockfrostKey, queryUTxOviaBlockfrost, submitTransactionViaBlockfrost };

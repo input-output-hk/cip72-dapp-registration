@@ -5,92 +5,92 @@ const protocolFilePath = process.env.PROTOCOL_FILE_PATH;
 const paymentSkeyFilePath = process.env.PAYMENT_SKEY_FILE_PATH;
 const net = process.env.NET;
 
-export const networkQuestion = () => {
+export const askNetworkQuestion = () => {
   const questions = [
     {
       type: 'list',
-      name: '_net',
+      name: 'net',
       message: 'Which network do you want to operate on?',
       choices: ['Devnet', 'Preview', 'Preprod', 'Mainnet'],
       default: net ? net.capitalize() : 'Mainnet',
       filter(val) {
         return val.toLowerCase();
-      },
-    },
+      }
+    }
   ];
   return inquirer.prompt(questions);
 };
 
-export const nodeQuestions = () => {
+export const askNodeQuestion = () => {
   const questions = [
     {
       type: 'list',
-      name: '_node',
+      name: 'node',
       message: 'Which node do you want to use?',
       choices: ['Local', 'Blockfrost'],
       default: 'Local',
       filter(val) {
         return val.toLowerCase();
-      },
-    },
+      }
+    }
   ];
   return inquirer.prompt(questions);
 };
 
-export const blockfrostQuestion = () => {
+export const askBlockfrostQuestion = () => {
   const questions = [
     {
-      name: '_blockfrostApiKey',
+      name: 'blockfrostApiKey',
       type: 'input',
-      message: 'Blockfrost API key?',
-    },
+      message: 'Blockfrost API key?'
+    }
   ];
   return inquirer.prompt(questions);
 };
 
-export const metadataQuestions = () => {
+export const askMetadataQuestions = () => {
   const questions = [
     {
       type: 'list',
-      name: '_actionType',
-      message: 'What action is the certificate asserting?',
+      name: 'actionType',
+      message: 'What action are you about to do?',
       choices: ['REGISTER', 'DE_REGISTER'],
-      default: 'REGISTER',
+      default: 'REGISTER'
     },
     {
-      name: '_comment',
+      name: 'comment',
       type: 'input',
-      message: 'Comment your change (optional):',
+      message: 'Comment your change (optional):'
     },
     {
-      name: '_metadataUrl',
+      name: 'metadataUrl',
       type: 'input',
-      message: 'What\'s the offchain metadata url?',
-    },
+      message: "What's the offchain metadata url?"
+    }
   ];
   return inquirer.prompt(questions);
 };
 
-export const txQuestions = () => {
+export const askTransactionQuestions = () => {
   const questions = [
     {
-      name: '_walletAddress',
+      name: 'walletAddress',
       type: 'input',
       message: 'Wallet address?',
-      default: walletAddress,
+      default: walletAddress
     },
     {
-      name: '_protocolFilePath',
+      name: 'protocolFilePath',
       type: 'input',
       message: 'Protocol file? (ignore if using Blockfrost)',
-      default: protocolFilePath,
+      default: protocolFilePath
     },
     {
-      name: '_paymentSkeyFilePath',
+      name: 'paymentSkeyFilePath',
       type: 'input',
       message: 'Payment skey file?',
-      default: paymentSkeyFilePath,
-    },
+      default: paymentSkeyFilePath
+    }
   ];
   return inquirer.prompt(questions);
 };
