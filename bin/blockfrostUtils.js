@@ -9,18 +9,19 @@ import { BlockFrostAPI } from '@blockfrost/blockfrost-js';
  */
 const queryUTxOviaBlockfrost = async (blockfrostKey, walletAddress) => {
   const blockfrost = new BlockFrostAPI({
-    projectId: blockfrostKey
+    projectId: blockfrostKey,
   });
   const utxos = await blockfrost.addressesUtxosAll(walletAddress);
   const {
     tx_hash: txHash = '',
     tx_index: txIx = 0,
-    amount = []
-  } = utxos.find((utxo) => {
-    const sum = utxo?.amount.reduce((acc, item) => acc + parseInt(item?.quantity, 10), 0);
-    return sum > 1000000;
-  });
-  const sum = amount.reduce((acc, item) => acc + parseInt(item?.quantity, 10), 0);
+    sum,
+  } = utxos
+    .map((utxo) => ({
+      ...utxo,
+      sum: utxo?.amount.reduce((acc, item) => acc + parseInt(item?.quantity, 10), 0),
+    }))
+    .find((utxo) => utxo.sum > 1000000);
   return { txHash, txIx, amount: sum };
 };
 
@@ -32,7 +33,7 @@ const queryUTxOviaBlockfrost = async (blockfrostKey, walletAddress) => {
  */
 const submitTransactionViaBlockfrost = async (blockfrostKey) => {
   const blockfrost = new BlockFrostAPI({
-    projectId: blockfrostKey
+    projectId: blockfrostKey,
   });
   const tx = await readFile('./tx.signed', { encoding: 'binary' });
   const cborHex = JSON.parse(tx)?.cborHex;
@@ -49,7 +50,7 @@ const submitTransactionViaBlockfrost = async (blockfrostKey) => {
 const validateBlockfrostKey = (net, blockfrostKey) => {
   if (!blockfrostKey.includes(net)) {
     throw new Error(
-      'Network and blockfrost key mismatch! Kindly check your blockfrost key and network.'
+      'Network and blockfrost key mismatch! Kindly check your blockfrost key and network.',
     );
   }
 };

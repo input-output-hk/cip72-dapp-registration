@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import blake2 from 'blake2';
 import nacl from 'tweetnacl';
 import fs from 'fs';
@@ -7,15 +6,11 @@ import * as util from 'tweetnacl-util';
 import axios, { isAxiosError } from 'axios';
 import _ from 'lodash';
 import Ajv from 'ajv';
-
-// eslint-disable-next-line
-import schema from './offChainDataSchema.json' assert { type: 'json' };
+import schema from './offChainDataSchema.json';
 
 nacl.util = util;
 
 const MAX_CHARACTER_LENGTH = 64;
-
-dotenv.config();
 
 const splitString = (value) => {
   if (value.length === 0) {
@@ -32,7 +27,7 @@ const splitString = (value) => {
 
 const fetchMetadata = async (metadataUrl) => {
   try {
-    console.log('Fetching metadata...');
+    console.info('Fetching metadata...');
     const res = await axios.get(metadataUrl);
     const metadata = res.data;
     if (!_.isObject(metadata) || _.isEmpty(metadata)) {
@@ -55,7 +50,7 @@ const validateMetadata = async (metadata) => {
   if (!valid) {
     const { errors } = validate;
     throw new Error(
-      `Invalid metadata: ${errors.map((error) => `${error.instancePath} ${error.message}`)}`
+      `Invalid metadata: ${errors.map((error) => `${error.instancePath} ${error.message}`)}`,
     );
   }
   return true;
@@ -75,7 +70,7 @@ const fetchAndParseMetadata = async (metadataUrl) => {
   await validateMetadata(dappMetadata);
   return {
     metadata: dappMetadata,
-    rootHash: calculateRootHash(dappMetadata)
+    rootHash: calculateRootHash(dappMetadata),
   };
 };
 
@@ -85,7 +80,7 @@ const generateMetadataJsonFile = (
   comment,
   metadataUrl,
   cipRootHash,
-  metadata
+  metadata,
 ) => {
   try {
     const { subject } = metadata;
@@ -98,9 +93,9 @@ const generateMetadataJsonFile = (
         metadata: offChainStoragePathArray,
         type: {
           action: actionType,
-          ...(comment && { comment })
-        }
-      }
+          ...(comment && { comment }),
+        },
+      },
     };
 
     fs.writeFileSync(metadataFilePath, JSON.stringify(metadataJson));

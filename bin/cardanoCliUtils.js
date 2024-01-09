@@ -18,76 +18,65 @@ const getNet = (net) => {
       selectedNet = '--mainnet';
       break;
     default:
-      console.log(
-        'Wrong network! Allowed values: devnet, preview, preprod, mainnet',
-        net,
-      );
+      console.info('Wrong network! Allowed values: devnet, preview, preprod, mainnet', net);
       break;
   }
   return selectedNet;
 };
 
-const queryUTxOUsingCardanoCli = async (walletAddress, net = 'preview') => new Promise((resolve, reject) => {
-  exec(
-    `cardano-cli query utxo \
+const queryUTxOUsingCardanoCli = async (walletAddress, net = 'preview') =>
+  new Promise((resolve, reject) => {
+    exec(
+      `cardano-cli query utxo \
         --address ${walletAddress} \
         ${getNet(net)}`,
-    (error, stdout, stderr) => {
-      if (error) {
-        reject(error.message);
-        return;
-      }
-      if (stderr) {
-        reject(stderr);
-        return;
-      }
-      const match = stdout.match(/([a-z0-9]{64}) *(\d) *(\d+)/);
-      // console.log(">stdout:", stdout, _match)
-      if (match === null) {
-        resolve({ txHash: 0, txIx: 0, amount: 0 });
-      } else {
-        const txHash = match[1];
-        const txIx = parseInt(match[2], 10);
-        const amount = parseInt(match[3], 10);
+      (error, stdout, stderr) => {
+        if (error) {
+          reject(error.message);
+          return;
+        }
+        if (stderr) {
+          reject(stderr);
+          return;
+        }
+        const match = stdout.match(/([a-z0-9]{64}) *(\d) *(\d+)/);
+        // console.log(">stdout:", stdout, _match)
+        if (match === null) {
+          resolve({ txHash: 0, txIx: 0, amount: 0 });
+        } else {
+          const txHash = match[1];
+          const txIx = parseInt(match[2], 10);
+          const amount = parseInt(match[3], 10);
 
-        resolve({ txHash, txIx, amount });
-      }
-    },
-  );
-});
+          resolve({ txHash, txIx, amount });
+        }
+      },
+    );
+  });
 
-const createDraftTransaction = (
-  walletAddress,
-  metadataFilePath,
-  txHash,
-  txIx,
-) => new Promise((resolve, reject) => {
-  const cmd = `cardano-cli transaction build-raw \
+const createDraftTransaction = (walletAddress, metadataFilePath, txHash, txIx) =>
+  new Promise((resolve, reject) => {
+    const cmd = `cardano-cli transaction build-raw \
                     --tx-in ${txHash}#${txIx} \
                     --tx-out ${walletAddress}+0 \
                     --metadata-json-file ${metadataFilePath} \
                     --fee 0 \
                     --out-file tx.draft`;
 
-  exec(cmd, (error, stdout, stderr) => {
-    if (error) {
-      reject(error.message);
-    } else if (stderr) {
-      reject(stderr);
-    }
-    resolve(true);
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        reject(error.message);
+      } else if (stderr) {
+        reject(stderr);
+      }
+      resolve(true);
+    });
   });
-});
 
 // TODO: This method currently returns fixed amount of fee for blockfrost.
 // It can be improved by calculating the fee based on the transaction size,
 // but it is out of scope for now as mainnet is not being used at this moment.
-const calculateTransactionFee = (
-  protocolFilePath,
-  amount,
-  blockfrostApiKey,
-  net = 'preview',
-) => {
+const calculateTransactionFee = (protocolFilePath, amount, blockfrostApiKey, net = 'preview') => {
   if (blockfrostApiKey) {
     const fee = 500000;
     const finalAmount = amount - fee;
@@ -119,77 +108,71 @@ const calculateTransactionFee = (
   });
 };
 
-const buildRealTransaction = (
-  walletAddress,
-  metadataFilePath,
-  txHash,
-  txIx,
-  fee,
-  finalAmount,
-) => new Promise((resolve, reject) => {
-  const cmd = `cardano-cli transaction build-raw \
+const buildRealTransaction = (walletAddress, metadataFilePath, txHash, txIx, fee, finalAmount) =>
+  new Promise((resolve, reject) => {
+    const cmd = `cardano-cli transaction build-raw \
                     --tx-in ${txHash}#${txIx} \
                     --tx-out ${walletAddress}+${finalAmount} \
                     --metadata-json-file ${metadataFilePath} \
                     --fee ${fee} \
                     --out-file tx.draft`;
-  exec(cmd, (error, stdout, stderr) => {
-    if (error) {
-      reject(error.message);
-    } else if (stderr) {
-      reject(stderr);
-    }
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        reject(error.message);
+      } else if (stderr) {
+        reject(stderr);
+      }
 
-    resolve(true);
+      resolve(true);
+    });
   });
-});
 
-const signedRealTransaction = (paymentSkeyFilePath, net = 'preview') => new Promise((resolve, reject) => {
-  exec(
-    `cardano-cli transaction sign \
+const signedRealTransaction = (paymentSkeyFilePath, net = 'preview') =>
+  new Promise((resolve, reject) => {
+    exec(
+      `cardano-cli transaction sign \
         --tx-body-file tx.draft \
         --signing-key-file ${paymentSkeyFilePath} \
         ${getNet(net)} \
         --out-file tx.signed`,
-    (error, stdout, stderr) => {
-      if (error) {
-        reject(error.message);
-      } else if (stderr) {
-        reject(stderr);
-      }
+      (error, stdout, stderr) => {
+        if (error) {
+          reject(error.message);
+        } else if (stderr) {
+          reject(stderr);
+        }
 
-      resolve(true);
-    },
-  );
-});
+        resolve(true);
+      },
+    );
+  });
 
-const submitTransactionUsingCardanoCli = async (net = 'preview') => new Promise((resolve, reject) => {
-  exec(
-    `cardano-cli transaction submit --tx-file tx.signed ${getNet(net)}`,
-    (error, stdout, stderr) => {
-      if (error) {
-        reject(error.message);
-      } else if (stderr) {
-        reject(stderr);
-      }
-      resolve(true);
-    },
-  );
-});
+const submitTransactionUsingCardanoCli = async (net = 'preview') =>
+  new Promise((resolve, reject) => {
+    exec(
+      `cardano-cli transaction submit --tx-file tx.signed ${getNet(net)}`,
+      (error, stdout, stderr) => {
+        if (error) {
+          reject(error.message);
+        } else if (stderr) {
+          reject(stderr);
+        }
+        resolve(true);
+      },
+    );
+  });
 
-const getSignedTxTransactionId = () => new Promise((resolve, reject) => {
-  exec(
-    'cardano-cli transaction txid --tx-file tx.signed',
-    (error, stdout, stderr) => {
+const getSignedTxTransactionId = () =>
+  new Promise((resolve, reject) => {
+    exec('cardano-cli transaction txid --tx-file tx.signed', (error, stdout, stderr) => {
       if (error) {
         reject(error.message);
       } else if (stderr) {
         reject(stderr);
       }
       resolve(stdout);
-    },
-  );
-});
+    });
+  });
 
 const cleanupTransactionFiles = () => rimraf(['tx.draft', 'tx.signed']);
 

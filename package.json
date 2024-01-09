@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon --watch src --watch bin bin/index.js",
+    "lint": "eslint ./bin/**/*.js",
+    "lint:fix": "yarn lint --fix",
     "start": "node bin/index.js",
     "restore-mnemonic-wallet": "./scripts/restore-mnemonic-wallet.sh",
     "setup-new-wallet": "./scripts/setup-new-wallet.sh"
@@ -30,9 +32,11 @@
     "yargs": "^17.6.2"
   },
   "devDependencies": {
-    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-prettier": "^5.1.2",
     "esm": "^3.2.25",
     "nodemon": "^2.0.20",
     "prettier": "^3.1.1"

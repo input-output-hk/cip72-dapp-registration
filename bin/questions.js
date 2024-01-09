@@ -15,8 +15,8 @@ export const askNetworkQuestion = () => {
       default: net ? net.capitalize() : 'Mainnet',
       filter(val) {
         return val.toLowerCase();
-      }
-    }
+      },
+    },
   ];
   return inquirer.prompt(questions);
 };
@@ -31,8 +31,8 @@ export const askNodeQuestion = () => {
       default: 'Local',
       filter(val) {
         return val.toLowerCase();
-      }
-    }
+      },
+    },
   ];
   return inquirer.prompt(questions);
 };
@@ -42,8 +42,8 @@ export const askBlockfrostQuestion = () => {
     {
       name: 'blockfrostApiKey',
       type: 'input',
-      message: 'Blockfrost API key?'
-    }
+      message: 'Blockfrost API key?',
+    },
   ];
   return inquirer.prompt(questions);
 };
@@ -55,18 +55,18 @@ export const askMetadataQuestions = () => {
       name: 'actionType',
       message: 'What action are you about to do?',
       choices: ['REGISTER', 'DE_REGISTER'],
-      default: 'REGISTER'
+      default: 'REGISTER',
     },
     {
       name: 'comment',
       type: 'input',
-      message: 'Comment your change (optional):'
+      message: 'Comment your change (optional):',
     },
     {
       name: 'metadataUrl',
       type: 'input',
-      message: "What's the offchain metadata url?"
-    }
+      message: "What's the offchain metadata url?",
+    },
   ];
   return inquirer.prompt(questions);
 };
@@ -77,20 +77,20 @@ export const askTransactionQuestions = () => {
       name: 'walletAddress',
       type: 'input',
       message: 'Wallet address?',
-      default: walletAddress
+      default: walletAddress,
     },
     {
       name: 'protocolFilePath',
       type: 'input',
       message: 'Protocol file? (ignore if using Blockfrost)',
-      default: protocolFilePath
+      default: protocolFilePath,
     },
     {
       name: 'paymentSkeyFilePath',
       type: 'input',
       message: 'Payment skey file?',
-      default: paymentSkeyFilePath
-    }
+      default: paymentSkeyFilePath,
+    },
   ];
   return inquirer.prompt(questions);
 };

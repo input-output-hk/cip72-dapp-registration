@@ -11,7 +11,7 @@ import {
   buildRealTransaction,
   signedRealTransaction,
   cleanupTransactionFiles,
-  getSignedTxTransactionId
+  getSignedTxTransactionId,
 } from './cardanoCliUtils.js';
 import { validateBlockfrostKey } from './blockfrostUtils.js';
 import { queryUTxO, submitTransaction } from './submitTransaction.js';
@@ -21,7 +21,7 @@ import {
   askMetadataQuestions,
   askTransactionQuestions,
   askNodeQuestion,
-  askBlockfrostQuestion
+  askBlockfrostQuestion,
 } from './questions.js';
 import { drawQuestionHeader, drawInfo, drawError } from './cliDrawings.js';
 
@@ -36,17 +36,17 @@ Object.defineProperty(String.prototype, 'capitalize', {
   value() {
     return this.charAt(0).toUpperCase() + this.slice(1);
   },
-  enumerable: false
+  enumerable: false,
 });
 
 const init = () => {
-  console.log(
+  console.info(
     chalk.green(
       figlet.textSync('CIP-72 CLI - Testnet', {
         horizontalLayout: 'default',
-        verticalLayout: 'default'
-      })
-    )
+        verticalLayout: 'default',
+      }),
+    ),
   );
 };
 
@@ -80,7 +80,7 @@ try {
     comment,
     metadataUrl,
     rootHash,
-    metadata
+    metadata,
   );
   if (generatedJsonMetadata) {
     drawInfo(chalk.yellowBright.bgBlue.bold, `Metadata.json generated: ${METADATA_FILE_PATH}`);
@@ -105,7 +105,7 @@ try {
     protocolFilePath,
     amount,
     net,
-    blockfrostApiKey
+    blockfrostApiKey,
   );
   drawInfo(chalk.black.bgGreenBright.bold, `- Fee: ${fee}`);
   drawInfo(chalk.black.bgGreenBright.bold, `- Final wallet amount: ${finalAmount}`);
