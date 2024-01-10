@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import dotenv from 'dotenv';
 import chalk from 'chalk';
 import figlet from 'figlet';
 
@@ -24,20 +23,11 @@ import {
   askBlockfrostQuestion,
 } from './questions.js';
 import { drawQuestionHeader, drawInfo, drawError } from './cliDrawings.js';
-
-dotenv.config();
+import { getValidationResultUrl } from './network.js';
+import { blockfrostApiKey as blockfrostKey } from './config.js';
 
 const METADATA_FILE_PATH = 'metadata.json';
-let blockfrostApiKey = process.env.BLOCKFROST_API_KEY;
-let net = process.env.NET;
-
-// eslint-disable-next-line no-extend-native
-Object.defineProperty(String.prototype, 'capitalize', {
-  value() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-  },
-  enumerable: false,
-});
+let blockfrostApiKey = blockfrostKey;
 
 const init = () => {
   console.info(
@@ -57,8 +47,7 @@ try {
   const { node } = await askNodeQuestion();
 
   drawQuestionHeader(chalk.black.bgMagenta.bold, 'Choose network');
-  const { net: networkAnswer } = await askNetworkQuestion();
-  net = networkAnswer;
+  const { net } = await askNetworkQuestion();
 
   if (node === 'blockfrost') {
     if (!blockfrostApiKey) {
@@ -66,7 +55,7 @@ try {
       const { blockfrostApiKey: blockfrostAnswer } = await askBlockfrostQuestion();
       blockfrostApiKey = blockfrostAnswer;
     }
-    net = validateBlockfrostKey(net, blockfrostApiKey);
+    validateBlockfrostKey(net, blockfrostApiKey);
   }
 
   drawQuestionHeader(chalk.yellowBright.bgBlue.bold, 'Metadata.json generation');
@@ -128,6 +117,12 @@ try {
   drawInfo(chalk.black.bgGreenBright.bold, 'Cleaning up transaction files...');
   await cleanupTransactionFiles();
   drawInfo(chalk.black.bgGreenBright.bold, 'Done!');
+
+  const validationResultUrl = getValidationResultUrl({ net, txId });
+  drawInfo(
+    chalk.black.bgGreenBright.bold,
+    `You can view validation result of your registration at ${validationResultUrl}`,
+  );
 } catch (error) {
   console.error('ERROR:', error);
   drawError(error);
