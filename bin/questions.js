@@ -12,7 +12,7 @@ export const askNetworkQuestion = () => {
       name: 'net',
       message: 'Which network do you want to operate on?',
       choices: ['Devnet', 'Preview', 'Preprod', 'Mainnet'],
-      default: net ? net.capitalize() : 'Mainnet',
+      default: net ? net.capitalize() : 'Preview',
       filter(val) {
         return val.toLowerCase();
       },
