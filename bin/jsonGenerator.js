@@ -6,11 +6,19 @@ import * as util from 'tweetnacl-util';
 import axios, { isAxiosError } from 'axios';
 import _ from 'lodash';
 import Ajv from 'ajv';
-import schema from './offChainDataSchema.json';
 
 nacl.util = util;
 
 const MAX_CHARACTER_LENGTH = 64;
+
+const loadSchemaData = () => {
+  try {
+    const jsonData = fs.readFileSync('./bin/offChainDataSchema.json', 'utf-8');
+    return JSON.parse(jsonData);
+  } catch (error) {
+    throw new Error(`Error reading or parsing JSON file: ${error}`);
+  }
+};
 
 const splitString = (value) => {
   if (value.length === 0) {
@@ -45,6 +53,7 @@ const fetchMetadata = async (metadataUrl) => {
 
 const validateMetadata = async (metadata) => {
   const ajv = new Ajv({ strict: false });
+  const schema = await loadSchemaData();
   const validate = ajv.compile(schema);
   const valid = validate(metadata);
   if (!valid) {
