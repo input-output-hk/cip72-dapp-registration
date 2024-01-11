@@ -8,7 +8,7 @@ export const askNetworkQuestion = () => {
   const choices = Object.values(availableNetwork).map(capitalize);
   const defaultNetwork = Object.values(availableNetwork).includes(net)
     ? net
-    : availableNetwork.mainnet;
+    : availableNetwork.preview;
   const questions = [
     {
       type: 'list',
