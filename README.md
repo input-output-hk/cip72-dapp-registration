@@ -1,81 +1,87 @@
-# How to register dApp to Cardano + submit CIP-72 format metadata
+# How to register dApp to Cardano
 
-## Set up cardano-cli
+Dapp registration is a transaction with specific metadata describing your dapp.
+For more details refer to [cip-72 specification](https://developers.cardano.org/docs/governance/cardano-improvement-proposals/cip-0072/).
 
-[https://github.com/piotr-iohk/cardano-up](https://github.com/piotr-iohk/cardano-up)
+This repository consists of scripts that intend to help you with submitting the registration transaction.
 
-## Set up local node or use blockfrost.io
+## Set up required tooling
 
-1. For local node setup -> [https://github.com/piotr-iohk/cardano-up](https://github.com/piotr-iohk/cardano-up)
-2. For getting a blockfrost key -> [https://blockfrost.io/](https://blockfrost.io/)
+You will need a node.js and yarn installed in your system.
 
-## Set up wallet
+You need a few tools to be available in your terminal:
+ - `cardani-cli`
+ - `cardano-address`
+ - `bech32`
 
-There are three ways to setup a wallet.
+You can set up a local cardano node if you choose to submit the registration transaction this way.
+Alternatively you could use [https://blockfrost.io/](https://blockfrost.io/). To do so you need to get an api key.
 
-- Create new wallet
-- Restore wallet using mnemonics.
-- Restore a wallet using existing keys (without mnemonics).
+We recommend the following ways of getting required binaries and the local node:
 
-### Create a new wallet
+ - [Latests cardano-wallet release](https://github.com/cardano-foundation/cardano-wallet/releases/latest): Downlaod the `cardano-wallet` archive appropriate for your system, unpack it
+and put the unpacked directory in you $PATH variable so the contents are available in your terminal. Start the local
+node if you which to use it.
+ - [Daedalus](https://daedaluswallet.io/en/download/): Download the `Daedalus` for chosen network, install it and add
+the `location-of-instalation/bin` to the $PATH variable so the contents are available in your terminal. This is an easy
+way to spin up a node locally however you will need to get the `bech32` yourself because it is not included in the
+Daedalus files
 
-1. Grant script permission to run `chmod +x ./scripts/setup-new-wallet.sh`
-2. Setup new wallet by running `yarn setup-new-wallet`
-3. Request Test ADA at [https://docs.cardano.org/cardano-testnet/tools/faucet](https://docs.cardano.org/cardano-testnet/tools/faucet)\
-   NB transaction fee it's a variable amount, something around 190.000 lovelace
-4. Query tip\
-   `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
-5. Install packages\
-   `$ yarn install`
-6. Copy .env.example to .end and edit it accordingly\
-   `$ cp .env.example .env`
-7. Create a cip72 metadata file.
-8. Launch **cip72-cli** and follow the instructions\
-   `$ yarn start`
+### Testnet-magic numbers 
 
-### Restore wallet from mnemonic
+In few places you will have to provide proper network parameter `(--mainnet | --testnet-magic NATURAL)`
 
-1. Make sure you have `bech32` and `cardano-address` installed. You can test with `bech32 -v` and `cardano-address -v` or install using `cabal install bech32 cardano-address`
-2. Create `phrase.prv` file and fill it up with your mnemonic in space seperated format.
-3. Grant script permission to run `chmod +x ./scripts/restore-mnemonic-wallet.sh`
-4. Restore mnemonic wallet by running `yarn restore-mnemonic-wallet`
-5. Make sure your wallet has test ADA for transaction fee
-6. Query tip\
-   `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
-7. Install packages\
-   `$ yarn install`
-8. Copy .env.example to .end and edit it accordingly\
-   `$ cp .env.example .env`
-9. Create a cip72 metadata file.
-10. Launch **cip72-cli** and follow the instructions\
-    `$ yarn start`
-
-### Restore a wallet using existing keys
-
-If you have your `payment.skey`, `payment.vkey`, `stake.skey` and `stake.vkey`, then you can follow these steps
-
-1. Create a payment address `$ cardano-cli address build --payment-verification-key-file payment.vkey --stake-verification-key-file stake.vkey --out-file payment.addr`
-2. Retrieves the node’s current pool parameters `$ cardano-cli query protocol-parameters --out-file protocol.json (--mainnet | --testnet-magic NATURAL)`
-3. Query tip `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
-4. Install packages\
-   `$ yarn install`
-5. Copy .env.example to .end and edit it accordingly\
-   `$ cp .env.example .env`
-6. Create a cip72 metadata file.
-7. Launch **cip72-cli** and follow the instructions\
-   `$ yarn start`
-
-### Testnet-magic numbers
-
-- 9: Devnet. `--testnet-magic=9`
 - 2: Preview. `--testnet-magic=2`
 - 1: Preprod. `--testnet-magic=1`
 
 ### Cardano node socket port
 
-This script assumes that your `CARDANO_NODE_SOCKET_PORT` is set in your terminal environment. If not, you can set it in `.env` file.
+If you choose to go with the local node you need to have the `CARDANO_NODE_SOCKET_PORT` env variable set to the path of
+the local node socket file.
 
-### Useful commands
+## Step 1: Set up wallet
+
+There are three ways to setup a wallet.
+
+- a) Restore wallet using mnemonics.
+- b) Restore a wallet using existing keys (without mnemonics).
+- c) Create new wallet
+
+### a) Restore wallet from mnemonic
+
+1. Create `phrase.prv` file and fill it up with your mnemonic in space seperated format.
+2. Grant script permission to run `chmod +x ./scripts/restore-mnemonic-wallet.sh`
+3. Restore mnemonic wallet by running `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) yarn restore-mnemonic-wallet`
+(Choose appropriate values of the NETWORK and LOCAL_NODE variables)
+
+### b) Restore a wallet using existing keys
+
+If you have your `payment.skey`, `payment.vkey`, `stake.skey` and `stake.vkey`, then you can follow these steps
+
+1. Create a payment address
+`$ cardano-cli address build --payment-verification-key-file payment.vkey --stake-verification-key-file stake.vkey --out-file payment.addr`
+2. (LOCAL NODE ONLY) Retrieve the node’s current pool parameters
+`$ cardano-cli query protocol-parameters --out-file protocol.json (--mainnet | --testnet-magic NATURAL)`
+(Choose appropriate network parameter)
+
+### c) Create a new wallet
+
+1. Grant script permission to run `chmod +x ./scripts/setup-new-wallet.sh`
+2. Setup new wallet. `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) yarn setup-new-wallet`
+(Choose appropriate values of the NETWORK and LOCAL_NODE variables)
+3. Request Test ADA at [https://docs.cardano.org/cardano-testnet/tools/faucet](https://docs.cardano.org/cardano-testnet/tools/faucet)
+to the generated address from the `payment.addr` file. NB transaction fee it's a variable amount, something around 190.000 lovelace
+
+## Step 2: Run the registration script
+
+1. Make sure your wallet has test ADA for transaction fee
+2. Install packages `yarn install`
+3. Copy `.env.example-blockfrost` or `.env.example-local-node` to the `.env` file and edit it appropriately
+`cp .env.example-<blockfrost|local-node> .env`
+4. Create a cip72 metadata file.
+5. Launch registration script and follow the instructions `yarn start`
+
+## Useful commands
 
 Ref.: [https://docs.cardano.org/development-guidelines/use-cli](https://docs.cardano.org/development-guidelines/use-cli)
 

@@ -1,5 +1,3 @@
-import { dappStoreUiUrlPreview, dappStoreUiUrlPreprod, dappStoreUiUrlMainnet } from './config.js';
-
 export const availableNetwork = {
   preview: 'preview',
   preprod: 'preprod',
@@ -7,9 +5,9 @@ export const availableNetwork = {
 };
 
 const mapOfUIUrls = {
-  [availableNetwork.preview]: dappStoreUiUrlPreview,
-  [availableNetwork.preprod]: dappStoreUiUrlPreprod,
-  [availableNetwork.mainnet]: dappStoreUiUrlMainnet,
+  [availableNetwork.preview]: 'https://live-preview.ui.dapp-store.lw.iog.io',
+  [availableNetwork.preprod]: 'https://live-preprod.ui.dapp-store.lw.iog.io',
+  [availableNetwork.mainnet]: '',
 };
 
 const allowedNetworkValues = Object.values(availableNetwork).join(', ');
