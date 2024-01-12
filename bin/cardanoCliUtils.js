@@ -121,7 +121,7 @@ const buildRealTransaction = (walletAddress, metadataFilePath, txHash, txIx, fee
     });
   });
 
-const signedRealTransaction = (paymentSkeyFilePath, net = availableNetwork.preview) =>
+const signRealTransaction = (paymentSkeyFilePath, net = availableNetwork.preview) =>
   new Promise((resolve, reject) => {
     exec(
       `cardano-cli transaction sign \
@@ -175,7 +175,7 @@ export {
   createDraftTransaction,
   calculateTransactionFee,
   buildRealTransaction,
-  signedRealTransaction,
+  signRealTransaction,
   submitTransactionUsingCardanoCli,
   cleanupTransactionFiles,
   getSignedTxTransactionId,

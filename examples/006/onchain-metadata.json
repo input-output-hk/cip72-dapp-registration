@@ -1,0 +1,15 @@
+{
+  "1667": {
+    "subject": "FakeSundaySwap-003",
+    "rootHash": "235b7c3eaa2998be10c3732ae2defbaa1cb1caffbf0cad4a3912f13bc0b4c448",
+    "metadata": [
+      "https://raw.githubusercontent.com/input-output-hk/dapp-store-cip",
+      "72/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/006/offchai",
+      "n-metadata.json"
+    ],
+    "type": {
+      "action": "REGISTER",
+      "comment": "My first release"
+    }
+  }
+}

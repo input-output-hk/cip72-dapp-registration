@@ -1,0 +1,15 @@
+{
+  "1667": {
+    "subject": "IdentityTestDApp-4",
+    "rootHash": "5c4392a47694b5077f8d5903a6e797503fdd70d5bbe20b341c25f2ca0d5dba67",
+    "metadata": [
+      "https://raw.githubusercontent.com/input-output-hk/dapp-store-cip",
+      "72/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/012/offchai",
+      "n-metadata.json"
+    ],
+    "type": {
+      "action": "REGISTER",
+      "comment": "My first release"
+    }
+  }
+}

@@ -1,81 +1,119 @@
-# How to register dApp to Cardano + submit CIP-72 format metadata
+# Guide on how to register Dapp on Cardano blockchain
 
-## Set up cardano-cli
+## About us
 
-[https://github.com/piotr-iohk/cardano-up](https://github.com/piotr-iohk/cardano-up)
+We, a team of Cardano developers and Web3 enthusiasts that believe in leveraging blockchain technology to create more
+inclusive and transparent digital future, joined together to develop the on-chain DApp registration standard (for more
+details refer to [cip-72 specification](https://cips.cardano.org/cip/CIP-0072)) that enables DApps developers to
+advertise their DApps on Cardano blockchain and make them visible and easily discoverable on chain in a standardized way.
 
-## Set up local node or use blockfrost.io
+## Purpose of this Guide
 
-1. For local node setup -> [https://github.com/piotr-iohk/cardano-up](https://github.com/piotr-iohk/cardano-up)
-2. For getting a blockfrost key -> [https://blockfrost.io/](https://blockfrost.io/)
+Outline what the on-chain DApp registration is about and help DApp developers register their DApps on Cardano blockchain.
 
-## Set up wallet
+## What is on-chain DApp registration?
 
-There are three ways to setup a wallet.
+The on-chain DApp registration, based on CIP-72 (Cardano DApp registration standard), is a transaction with specific
+metadata describing your DApp. In general, the on-chain DApp registration process is similar to the on-chain Stake Pool
+registration process, but in this case the DApp developer references key information about their DApp (e.g. DApp name,
+logo, description, contacts, website, etc.) stored somewhere off-chain (e.g. DApp website, Github, etc.) on Cardano blockchain.
 
-- Create new wallet
-- Restore wallet using mnemonics.
-- Restore a wallet using existing keys (without mnemonics).
+#### We can see the following benefits for the DApp developer from registering their DApp on Cardano blockchain:
+1. remove the hassle of providing the same key information about your DApp to various sources each time you are asked to
+2. advertise and anchor your DApp on Cardano blockchain
+3. make your DApp easily discoverable from day one by Cardano community 
+4. make key information about your DApp available in a standardized way so any DApp aggregator, board, or wallet can
+integrate and consume it easily
 
-### Create a new wallet
+## Create Off-chain JSON with DApp data
 
-1. Grant script permission to run `chmod +x ./scripts/setup-new-wallet.sh`
-2. Setup new wallet by running `yarn setup-new-wallet`
-3. Request Test ADA at [https://docs.cardano.org/cardano-testnet/tools/faucet](https://docs.cardano.org/cardano-testnet/tools/faucet)\
-   NB transaction fee it's a variable amount, something around 190.000 lovelace
-4. Query tip\
-   `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
-5. Install packages\
-   `$ yarn install`
-6. Copy .env.example to .end and edit it accordingly\
-   `$ cp .env.example .env`
-7. Create a cip72 metadata file.
-8. Launch **cip72-cli** and follow the instructions\
-   `$ yarn start`
+Initiate your DApp's on-chain registration journey by crafting an offchain-metadata.json file (list your DApp under one or several appropriate categories from this category list ["DeFi", "Development", "Education", "Games", "Identity", "Marketplace", "NFT", "Other", "Security"]). 
+Seek inspiration from the 16 sample offchain-metadata.json files conveniently housed within the [examples](./examples) folder. 
+Once this document is ready, upload onto any web platform – the DApp's website or a repository like Github Gist. 
+Now, you can use that URL when the script asks you to input, which will be used for the onchain metadatada of the transaction.
 
-### Restore wallet from mnemonic
+## Set up required tooling
 
-1. Make sure you have `bech32` and `cardano-address` installed. You can test with `bech32 -v` and `cardano-address -v` or install using `cabal install bech32 cardano-address`
-2. Create `phrase.prv` file and fill it up with your mnemonic in space seperated format.
-3. Grant script permission to run `chmod +x ./scripts/restore-mnemonic-wallet.sh`
-4. Restore mnemonic wallet by running `yarn restore-mnemonic-wallet`
-5. Make sure your wallet has test ADA for transaction fee
-6. Query tip\
-   `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
-7. Install packages\
-   `$ yarn install`
-8. Copy .env.example to .end and edit it accordingly\
-   `$ cp .env.example .env`
-9. Create a cip72 metadata file.
-10. Launch **cip72-cli** and follow the instructions\
-    `$ yarn start`
+You will need a node.js and yarn installed in your system.
 
-### Restore a wallet using existing keys
+You need a few tools to be available in your terminal:
+ - `cardani-cli`
+ - `cardano-address`
+ - `bech32`
 
-If you have your `payment.skey`, `payment.vkey`, `stake.skey` and `stake.vkey`, then you can follow these steps
+You can set up a local cardano node if you choose to submit the registration transaction this way.
+Alternatively you could use [https://blockfrost.io/](https://blockfrost.io/). To do so you need to get an api key.
 
-1. Create a payment address `$ cardano-cli address build --payment-verification-key-file payment.vkey --stake-verification-key-file stake.vkey --out-file payment.addr`
-2. Retrieves the node’s current pool parameters `$ cardano-cli query protocol-parameters --out-file protocol.json (--mainnet | --testnet-magic NATURAL)`
-3. Query tip `$ cardano-cli query tip (--mainnet | --testnet-magic NATURAL)`
-4. Install packages\
-   `$ yarn install`
-5. Copy .env.example to .end and edit it accordingly\
-   `$ cp .env.example .env`
-6. Create a cip72 metadata file.
-7. Launch **cip72-cli** and follow the instructions\
-   `$ yarn start`
+We recommend the following ways of getting required binaries and the local node:
 
-### Testnet-magic numbers
+ - [Latests cardano-wallet release](https://github.com/cardano-foundation/cardano-wallet/releases/latest): Downlaod the `cardano-wallet` archive appropriate for your system, unpack it
+and put the unpacked directory in you $PATH variable so the contents are available in your terminal. Start the local
+node if you wish to use it.
+ - Daedalus ([mainnet](https://daedaluswallet.io/en/download/) or
+[preview/preprod](https://docs.cardano.org/cardano-testnet/daedalus-testnet/)): Download the `Daedalus` for chosen
+network, install it and add the `location-of-instalation/bin` to the $PATH variable so the contents are available in
+your terminal. This is an easy way to spin up a node locally however you will need to get the `bech32` yourself because
+it is not included in the Daedalus files
 
-- 9: Devnet. `--testnet-magic=9`
+### Testnet-magic numbers 
+
+In few places you will have to provide proper network parameter `(--mainnet | --testnet-magic NATURAL)`
+
 - 2: Preview. `--testnet-magic=2`
 - 1: Preprod. `--testnet-magic=1`
 
 ### Cardano node socket port
 
-This script assumes that your `CARDANO_NODE_SOCKET_PORT` is set in your terminal environment. If not, you can set it in `.env` file.
+If you choose to go with the local node you need to have the `CARDANO_NODE_SOCKET_PATH` env variable set to the path of
+the local node socket file.
 
-### Useful commands
+## Step 1: Set up wallet
+
+There are three ways to set up a wallet.
+
+- a) Restore a wallet using mnemonics.
+- b) Restore a wallet using existing keys (without mnemonics).
+- c) Create a new wallet
+
+### a) Restore a wallet from mnemonic
+
+1. Create `phrase.prv` file and fill it up with your mnemonic in space seperated format.
+2. Grant script permission to run `chmod +x ./scripts/restore-mnemonic-wallet.sh`
+3. Restore mnemonic wallet by running `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) yarn restore-mnemonic-wallet`
+(Choose appropriate values of the NETWORK and LOCAL_NODE variables)
+
+### b) Restore a wallet using existing keys
+
+If you have your `payment.skey`, `payment.vkey`, `stake.skey` and `stake.vkey`, then you can follow these steps
+
+1. Create a payment address
+`$ cardano-cli address build --payment-verification-key-file payment.vkey --stake-verification-key-file stake.vkey --out-file payment.addr`
+2. (LOCAL NODE ONLY) Retrieve the node’s current pool parameters
+`$ cardano-cli query protocol-parameters --out-file protocol.json (--mainnet | --testnet-magic NATURAL)`
+(Choose appropriate network parameter)
+
+### c) Create a new wallet
+
+1. Grant script permission to run `chmod +x ./scripts/setup-new-wallet.sh`
+2. Setup new wallet. `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) yarn setup-new-wallet`
+(Choose appropriate values of the NETWORK and LOCAL_NODE variables)
+3. Request Test ADA (preview or preprod) at [https://docs.cardano.org/cardano-testnet/tools/faucet](https://docs.cardano.org/cardano-testnet/tools/faucet)
+to the generated address from the `payment.addr` file.
+
+## Step 2: Run the registration script
+
+1. Make sure your wallet has test ADA for transaction fee (it's a variable amount, something around 190.000 lovelace).
+2. Install packages `yarn install`
+3. Copy `.env.example-blockfrost` or `.env.example-local-node` to the `.env` file and edit it appropriately
+`cp .env.example-<blockfrost|local-node> .env`
+4. Prepare your cip-72 off chain metadata link you created at the beginning
+([Create Off-chain JSON with DApp data](#create-off-chain-json-with-dapp-data)) 
+5. Launch registration script and follow the instructions `yarn start`
+6. To monitor the status of your dApp registration, simply invoke the provided URL. At the end of successful script run there will be URL for your submitted tx provided for convenience.
+- Preview: https://live-preview.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
+- Preprod: https://live-preprod.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
+
+## Useful commands when using local node
 
 Ref.: [https://docs.cardano.org/development-guidelines/use-cli](https://docs.cardano.org/development-guidelines/use-cli)
 
@@ -117,7 +155,7 @@ $ cardano-cli transaction calculate-min-fee \
 --protocol-params-file protocol.json
 ```
 
-Then we calculate the total amount of our wallet minus the calculated fee as the total output amount\
+Then we calculate the total amount of our wallet minus the calculated fee as the total amount after transaction is complete\
 `$ expr 9998003445 - 180285 = 9997823160`
 
 To build final transaction:
@@ -147,5 +185,3 @@ To submit the transaction:\
 ### Testnets faucet
 
 [https://docs.cardano.org/cardano-testnet/tools/faucet](https://docs.cardano.org/cardano-testnet/tools/faucet)
-
-https://www.shorturl.at/

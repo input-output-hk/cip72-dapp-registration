@@ -8,7 +8,7 @@ import {
   createDraftTransaction,
   calculateTransactionFee,
   buildRealTransaction,
-  signedRealTransaction,
+  signRealTransaction,
   cleanupTransactionFiles,
   getSignedTxTransactionId,
 } from './cardanoCliUtils.js';
@@ -104,7 +104,7 @@ try {
   drawInfo(chalk.black.bgGreenBright.bold, '- Transaction built!');
   drawInfo(chalk.black.bgGreenBright.bold, 'Signing transaction...');
 
-  await signedRealTransaction(paymentSkeyFilePath, net);
+  await signRealTransaction(paymentSkeyFilePath, net);
   drawInfo(chalk.black.bgGreenBright.bold, '- Transaction signed!');
 
   drawInfo(chalk.black.bgGreenBright.bold, 'Submitting transaction...');

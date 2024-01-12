@@ -1,7 +1,22 @@
 #!/bin/bash
 
-# Set the network (default to preview, you can change it to --mainnet if needed)
-NETWORK="--testnet-magic 2"
+NETWORK_PARAMETER=""
+
+case $NETWORK in
+  preview)
+    NETWORK_PARAMETER="--testnet-magic=2"
+    ;;
+  preprod)
+    NETWORK_PARAMETER="--testnet-magic=1"
+    ;;
+  mainnet)
+    NETWORK_PARAMETER="--mainnet"
+    ;;
+  *)
+    echo Error: Invalid network $NETWORK
+    exit 1
+    ;;
+esac
 
 # Check if phrase.prv file exists
 if [ ! -f "phrase.prv" ]; then
@@ -36,8 +51,11 @@ cardano-cli key verification-key --signing-key-file stake.skey --verification-ke
 cardano-cli key non-extended-key --extended-verification-key-file stake.evkey --verification-key-file stake.vkey
 
 # Get wallet address and protocol parameter
-cardano-cli address build --payment-verification-key-file payment.vkey --stake-verification-key-file stake.vkey --out-file payment.addr $NETWORK
-cardano-cli query protocol-parameters --out-file protocol.json $NETWORK
+cardano-cli address build --payment-verification-key-file payment.vkey --stake-verification-key-file stake.vkey --out-file payment.addr $NETWORK_PARAMETER
+
+if [ "$LOCAL_NODE" = "true" ]; then
+  cardano-cli query protocol-parameters --out-file protocol.json $NETWORK_PARAMETER
+fi
 
 rm stake.evkey
 rm key.xsk
