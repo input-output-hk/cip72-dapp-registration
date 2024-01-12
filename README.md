@@ -14,7 +14,7 @@ Outline what the on-chain DApp registration is about and help DApp developers re
 ## What is on-chain DApp registration?
 
 The on-chain DApp registration, based on CIP-72 (Cardano DApp registration standard), is a transaction with specific
-metadata describing your Dapp. In general, the on-chain DApp registration process is similar to the on-chain Stake Pool
+metadata describing your DApp. In general, the on-chain DApp registration process is similar to the on-chain Stake Pool
 registration process, but in this case the DApp developer references key information about their DApp (e.g. DApp name,
 logo, description, contacts, website, etc.) stored somewhere off-chain (e.g. DApp website, Github, etc.) on Cardano blockchain.
 
@@ -27,9 +27,9 @@ integrate and consume it easily
 
 ## Create Off-chain JSON with DApp data
 
-Initiate your dApp's on-chain registration journey by crafting an offchain-metadata.json file. 
+Initiate your DApp's on-chain registration journey by crafting an offchain-metadata.json file. 
 Seek inspiration from the 16 sample offchain-metadata.json files conveniently housed within the [examples](./examples) folder. 
-Once this document is ready, upload onto any web platform – the dApp's website or a repository like Github Gist. 
+Once this document is ready, upload onto any web platform – the DApp's website or a repository like Github Gist. 
 Now, you can use that URL when the script asks you to input, which will be used for the onchain metadatada of the transaction.
 
 ## Set up required tooling
@@ -48,7 +48,7 @@ We recommend the following ways of getting required binaries and the local node:
 
  - [Latests cardano-wallet release](https://github.com/cardano-foundation/cardano-wallet/releases/latest): Downlaod the `cardano-wallet` archive appropriate for your system, unpack it
 and put the unpacked directory in you $PATH variable so the contents are available in your terminal. Start the local
-node if you which to use it.
+node if you wish to use it.
  - Daedalus ([mainnet](https://daedaluswallet.io/en/download/) or
 [preview/preprod](https://docs.cardano.org/cardano-testnet/daedalus-testnet/)): Download the `Daedalus` for chosen
 network, install it and add the `location-of-instalation/bin` to the $PATH variable so the contents are available in
@@ -64,18 +64,18 @@ In few places you will have to provide proper network parameter `(--mainnet | --
 
 ### Cardano node socket port
 
-If you choose to go with the local node you need to have the `CARDANO_NODE_SOCKET_PORT` env variable set to the path of
+If you choose to go with the local node you need to have the `CARDANO_NODE_SOCKET_PATH` env variable set to the path of
 the local node socket file.
 
 ## Step 1: Set up wallet
 
-There are three ways to setup a wallet.
+There are three ways to set up a wallet.
 
-- a) Restore wallet using mnemonics.
+- a) Restore a wallet using mnemonics.
 - b) Restore a wallet using existing keys (without mnemonics).
-- c) Create new wallet
+- c) Create a new wallet
 
-### a) Restore wallet from mnemonic
+### a) Restore a wallet from mnemonic
 
 1. Create `phrase.prv` file and fill it up with your mnemonic in space seperated format.
 2. Grant script permission to run `chmod +x ./scripts/restore-mnemonic-wallet.sh`
@@ -97,24 +97,23 @@ If you have your `payment.skey`, `payment.vkey`, `stake.skey` and `stake.vkey`, 
 1. Grant script permission to run `chmod +x ./scripts/setup-new-wallet.sh`
 2. Setup new wallet. `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) yarn setup-new-wallet`
 (Choose appropriate values of the NETWORK and LOCAL_NODE variables)
-3. Request Test ADA at [https://docs.cardano.org/cardano-testnet/tools/faucet](https://docs.cardano.org/cardano-testnet/tools/faucet)
-to the generated address from the `payment.addr` file. NB transaction fee it's a variable amount, something around 190.000 lovelace
+3. Request Test ADA (preview or preprod) at [https://docs.cardano.org/cardano-testnet/tools/faucet](https://docs.cardano.org/cardano-testnet/tools/faucet)
+to the generated address from the `payment.addr` file.
 
 ## Step 2: Run the registration script
 
-1. Make sure your wallet has test ADA for transaction fee. (Using local node? Check the
-[Useful commands](#useful-commands) section below for a command to query the utxo).
+1. Make sure your wallet has test ADA for transaction fee (it's a variable amount, something around 190.000 lovelace).
 2. Install packages `yarn install`
 3. Copy `.env.example-blockfrost` or `.env.example-local-node` to the `.env` file and edit it appropriately
 `cp .env.example-<blockfrost|local-node> .env`
 4. Prepare your cip-72 off chain metadata link you created at the beginning
 ([Create Off-chain JSON with DApp data](#create-off-chain-json-with-dapp-data)) 
 5. Launch registration script and follow the instructions `yarn start`
-6. To monitor the status of your dApp registration, simply invoke the provided URL.
+6. To monitor the status of your dApp registration, simply invoke the provided URL. At the end of successful script run there will be URL for your submitted tx provided for convenience.
 - Preview: https://live-preview.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
 - Preprod: https://live-preprod.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
 
-## Useful commands
+## Useful commands when using local node
 
 Ref.: [https://docs.cardano.org/development-guidelines/use-cli](https://docs.cardano.org/development-guidelines/use-cli)
 
@@ -156,7 +155,7 @@ $ cardano-cli transaction calculate-min-fee \
 --protocol-params-file protocol.json
 ```
 
-Then we calculate the total amount of our wallet minus the calculated fee as the total output amount\
+Then we calculate the total amount of our wallet minus the calculated fee as the total amount after transaction is complete\
 `$ expr 9998003445 - 180285 = 9997823160`
 
 To build final transaction:
@@ -186,5 +185,3 @@ To submit the transaction:\
 ### Testnets faucet
 
 [https://docs.cardano.org/cardano-testnet/tools/faucet](https://docs.cardano.org/cardano-testnet/tools/faucet)
-
-https://www.shorturl.at/
