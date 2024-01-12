@@ -27,8 +27,7 @@ integrate and consume it easily
 
 ## Create Off-chain JSON with DApp data
 
-To start the on-chain DApp registration process, create the off-chain JSON (here is the off-chain JSON template
-[add link here]) with key information about your DApp (e.g. DApp name, logo, description, contacts, website, etc.) and
+To start the on-chain DApp registration process, create the off-chain JSON (in this repository you can find under the `metadata` folder 16 different examples of dapps you can use as reference for the registration) with key information about your DApp (e.g. DApp name, logo, description, contacts, website, etc.) and
 upload it somewhere on the WEB (e.g. the DApp website, Github, etc.) so you can get a link/URL to it. Here is the
 example of the off-chain JSON with a test DApp [add link here]. The expected result of this step is that you have a
 link/URL to your DApp's off-chain JSON.
