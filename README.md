@@ -111,8 +111,8 @@ to the generated address from the `payment.addr` file. NB transaction fee it's a
 ([Create Off-chain JSON with DApp data](#create-off-chain-json-with-dapp-data)) 
 5. Launch registration script and follow the instructions `yarn start`
 6. Depending on what environment you have send the registration preprod/preview you can check the status of the dapp-registration by calling this URL: 
-- Preview: https://live-preview.ui.dapp-store.lw.iog.io/dapp-validation-result/<txid>
-- Preprod: https://live-preprod.ui.dapp-store.lw.iog.io/dapp-validation-result/<txid>
+- Preview: https://live-preview.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
+- Preprod: https://live-preprod.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
 
 ## Useful commands
 
