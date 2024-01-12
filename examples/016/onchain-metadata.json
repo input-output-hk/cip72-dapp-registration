@@ -1,0 +1,13 @@
+{
+  "1667": {
+    "subject": "FakeMinswap-1",
+    "rootHash": "5d558962593bd61acba04bb827c833592f6ea29bcec18854f77688181a006600",
+    "metadata": [
+      "shorturl.at/cnFQ1"
+    ],
+    "type": {
+      "action": "REGISTER",
+      "comment": "My first release"
+    }
+  }
+}

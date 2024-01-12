@@ -1,0 +1,15 @@
+{
+  "1667": {
+    "subject": "NFTTestDApp-4",
+    "rootHash": "5fd043cfd2a30a1852a6a5c90c3d4dc3d98f4facf6ec60032afd5fc214e01f22",
+    "metadata": [
+      "https://gist.githubusercontent.com/greatertomi/28893aa71a6e2cb64",
+      "e861cf3ae80284e/raw/b05b7d05bfe9a3274d7c9217a85ebe2b7a925441/fak",
+      "e_taptool_offchain_metadata.json"
+    ],
+    "type": {
+      "action": "REGISTER",
+      "comment": "My first release"
+    }
+  }
+}

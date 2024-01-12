@@ -1,0 +1,13 @@
+{
+  "1667": {
+    "subject": "MarketPlaceTestDApp-4",
+    "rootHash": "334f8ce524108beed129a47ca387c6b163286c346379bef13a2912db92415c6a",
+    "metadata": [
+      "shorturl.at/xQ136"
+    ],
+    "type": {
+      "action": "REGISTER",
+      "comment": "My first release"
+    }
+  }
+}

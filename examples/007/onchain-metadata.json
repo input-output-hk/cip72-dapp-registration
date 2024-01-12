@@ -1,0 +1,13 @@
+{
+  "1667": {
+    "subject": "FakeNMKR-003",
+    "rootHash": "c1b414fe84f0b890a0b03556376dd28c91e661c1a3820f0b2410fde516535b94",
+    "metadata": [
+      "shorturl.at/syDL4"
+    ],
+    "type": {
+      "action": "REGISTER",
+      "comment": "My first release"
+    }
+  }
+}

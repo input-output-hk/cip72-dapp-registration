@@ -27,10 +27,10 @@ integrate and consume it easily
 
 ## Create Off-chain JSON with DApp data
 
-To start the on-chain DApp registration process, create the off-chain JSON (in this repository you can find under the `metadata` folder 16 different examples of dapps you can use as reference for the registration) with key information about your DApp (e.g. DApp name, logo, description, contacts, website, etc.) and
-upload it somewhere on the WEB (e.g. the DApp website, Github, etc.) so you can get a link/URL to it. Here is the
-example of the off-chain JSON with a test DApp [add link here]. The expected result of this step is that you have a
-link/URL to your DApp's off-chain JSON.
+Initiate your dApp's on-chain registration journey by crafting an offchain-metadata.json file. 
+Seek inspiration from the 16 sample offchain-metadata.json files conveniently housed within the [examples](tree/main/examples) folder. 
+Once this document is ready, upload onto any web platform – the dApp's website or a repository like Github Gist. 
+Now, you can use that URL when the script asks you to input, which will be used for the onchain metadatada of the transaction.
 
 ## Set up required tooling
 
@@ -110,6 +110,9 @@ to the generated address from the `payment.addr` file. NB transaction fee it's a
 4. Prepare your cip-72 off chain metadata link you created at the beginning
 ([Create Off-chain JSON with DApp data](#create-off-chain-json-with-dapp-data)) 
 5. Launch registration script and follow the instructions `yarn start`
+6. Depending on what environment you have send the registration preprod/preview you can check the status of the dapp-registration by calling this URL: 
+Preview: https://live-preview.ui.dapp-store.lw.iog.io/dapp-validation-result/<txid>
+Preprod: https://live-preprod.ui.dapp-store.lw.iog.io/dapp-validation-result/<txid>
 
 ## Useful commands
 

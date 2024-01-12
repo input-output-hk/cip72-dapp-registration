@@ -1,0 +1,13 @@
+{
+  "1667": {
+    "subject": "GamesTestDApp-4",
+    "rootHash": "dc0e807e50e05a9db415edc20bec8e7dbbce939d60a3a556bb513ffb39225773",
+    "metadata": [
+      "shorturl.at/cnFQ1"
+    ],
+    "type": {
+      "action": "REGISTER",
+      "comment": "My first release"
+    }
+  }
+}

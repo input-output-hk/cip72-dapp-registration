@@ -1,0 +1,15 @@
+{
+  "1667": {
+    "subject": "EducationTestDApp-6",
+    "rootHash": "744535c81e087080120cef324b961f7c6ee7bb7737197259dd1d47e1f46fc14e",
+    "metadata": [
+      "https://gist.githubusercontent.com/greatertomi/d9b6e325bfac87805",
+      "b835c8102cf03f2/raw/137f90e3377a97a50bef67c9e346ed9a519bd344/fak",
+      "e_dapp_cip72.json"
+    ],
+    "type": {
+      "action": "REGISTER",
+      "comment": "My first release"
+    }
+  }
+}

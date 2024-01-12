@@ -1,0 +1,13 @@
+{
+  "1667": {
+    "subject": "IdentityTestDApp-4",
+    "rootHash": "5c4392a47694b5077f8d5903a6e797503fdd70d5bbe20b341c25f2ca0d5dba67",
+    "metadata": [
+      "shorturl.at/lsA19"
+    ],
+    "type": {
+      "action": "REGISTER",
+      "comment": "My first release"
+    }
+  }
+}
