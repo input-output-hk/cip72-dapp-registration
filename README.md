@@ -28,7 +28,7 @@ integrate and consume it easily
 ## Create Off-chain JSON with DApp data
 
 Initiate your dApp's on-chain registration journey by crafting an offchain-metadata.json file. 
-Seek inspiration from the 16 sample offchain-metadata.json files conveniently housed within the [examples](tree/main/examples) folder. 
+Seek inspiration from the 16 sample offchain-metadata.json files conveniently housed within the [examples](./examples) folder. 
 Once this document is ready, upload onto any web platform – the dApp's website or a repository like Github Gist. 
 Now, you can use that URL when the script asks you to input, which will be used for the onchain metadatada of the transaction.
 
