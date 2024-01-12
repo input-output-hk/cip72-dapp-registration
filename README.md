@@ -110,7 +110,7 @@ to the generated address from the `payment.addr` file. NB transaction fee it's a
 4. Prepare your cip-72 off chain metadata link you created at the beginning
 ([Create Off-chain JSON with DApp data](#create-off-chain-json-with-dapp-data)) 
 5. Launch registration script and follow the instructions `yarn start`
-6. Depending on what environment you have send the registration preprod/preview you can check the status of the dapp-registration by calling this URL: 
+6. To monitor the status of your dApp registration, simply invoke the provided URL.
 - Preview: https://live-preview.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
 - Preprod: https://live-preprod.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
 
