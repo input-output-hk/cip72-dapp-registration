@@ -2,7 +2,10 @@
 
 ## About us
 
-We, a team of Cardano developers and Web3 enthusiasts that believe in leveraging blockchain technology to create more inclusive and transparent digital future, joined together to develop the on-chain DApp registration standard (for more details refer to [cip-72 specification](https://developers.cardano.org/docs/governance/cardano-improvement-proposals/cip-0072/]) that enables DApps developers to advertise their DApps on Cardano blockchain and make them visible and easily discoverable on chain in a standardized way.
+We, a team of Cardano developers and Web3 enthusiasts that believe in leveraging blockchain technology to create more
+inclusive and transparent digital future, joined together to develop the on-chain DApp registration standard (for more
+details refer to [cip-72 specification](https://cips.cardano.org/cip/CIP-0072)) that enables DApps developers to
+advertise their DApps on Cardano blockchain and make them visible and easily discoverable on chain in a standardized way.
 
 ## Purpose of this Guide
 
@@ -10,18 +13,25 @@ Outline what the on-chain DApp registration is about and help DApp developers re
 
 ## What is on-chain DApp registration?
 
-The on-chain DApp registration, based on CIP-72 (Cardano DApp registration standard), is a transaction with specific metadata describing your Dapp. In general, the on-chain DApp registration process is similar to the on-chain Stake Pool registration process, but in this case the DApp developer references key information about their DApp (e.g. DApp name, logo, description, contacts, website, etc.) stored somewhere off-chain (e.g. DApp website, Github, etc.) on Cardano blockchain.
+The on-chain DApp registration, based on CIP-72 (Cardano DApp registration standard), is a transaction with specific
+metadata describing your Dapp. In general, the on-chain DApp registration process is similar to the on-chain Stake Pool
+registration process, but in this case the DApp developer references key information about their DApp (e.g. DApp name,
+logo, description, contacts, website, etc.) stored somewhere off-chain (e.g. DApp website, Github, etc.) on Cardano blockchain.
 
 #### We can see the following benefits for the DApp developer from registering their DApp on Cardano blockchain:
-
-         1. remove the hassle of providing the same key information about your DApp to various sources each time you are asked to
-         2. advertise and anchor your DApp on Cardano blockchain
-         3. make your DApp easily discoverable from day one by Cardano community 
-         4. make key information about your DApp available in a standardized way so any DApp aggregator, board, or wallet can integrate and consume it easily
+1. remove the hassle of providing the same key information about your DApp to various sources each time you are asked to
+2. advertise and anchor your DApp on Cardano blockchain
+3. make your DApp easily discoverable from day one by Cardano community 
+4. make key information about your DApp available in a standardized way so any DApp aggregator, board, or wallet can
+integrate and consume it easily
 
 ## Create Off-chain JSON with DApp data
 
-To start the on-chain DApp registration process, create the off-chain JSON (here is the off-chain JSON template [add link here]) with key information about your DApp (e.g. DApp name, logo, description, contacts, website, etc.) and upload it somewhere on the WEB (e.g. the DApp website, Github, etc.) so you can get a link/URL to it. Here is the example of the off-chain JSON with a test DApp [add link here]. The expected result of this step is that you have a link/URL to your DApp's off-chain JSON.
+To start the on-chain DApp registration process, create the off-chain JSON (here is the off-chain JSON template
+[add link here]) with key information about your DApp (e.g. DApp name, logo, description, contacts, website, etc.) and
+upload it somewhere on the WEB (e.g. the DApp website, Github, etc.) so you can get a link/URL to it. Here is the
+example of the off-chain JSON with a test DApp [add link here]. The expected result of this step is that you have a
+link/URL to your DApp's off-chain JSON.
 
 ## Set up required tooling
 
@@ -40,10 +50,11 @@ We recommend the following ways of getting required binaries and the local node:
  - [Latests cardano-wallet release](https://github.com/cardano-foundation/cardano-wallet/releases/latest): Downlaod the `cardano-wallet` archive appropriate for your system, unpack it
 and put the unpacked directory in you $PATH variable so the contents are available in your terminal. Start the local
 node if you which to use it.
- - [Daedalus](https://daedaluswallet.io/en/download/): Download the `Daedalus` for chosen network, install it and add
-the `location-of-instalation/bin` to the $PATH variable so the contents are available in your terminal. This is an easy
-way to spin up a node locally however you will need to get the `bech32` yourself because it is not included in the
-Daedalus files
+ - Daedalus ([mainnet](https://daedaluswallet.io/en/download/) or
+[preview/preprod](https://docs.cardano.org/cardano-testnet/daedalus-testnet/)): Download the `Daedalus` for chosen
+network, install it and add the `location-of-instalation/bin` to the $PATH variable so the contents are available in
+your terminal. This is an easy way to spin up a node locally however you will need to get the `bech32` yourself because
+it is not included in the Daedalus files
 
 ### Testnet-magic numbers 
 
@@ -92,11 +103,13 @@ to the generated address from the `payment.addr` file. NB transaction fee it's a
 
 ## Step 2: Run the registration script
 
-1. Make sure your wallet has test ADA for transaction fee
+1. Make sure your wallet has test ADA for transaction fee. (Using local node? Check the
+[Useful commands](#useful-commands) section below for a command to query the utxo).
 2. Install packages `yarn install`
 3. Copy `.env.example-blockfrost` or `.env.example-local-node` to the `.env` file and edit it appropriately
 `cp .env.example-<blockfrost|local-node> .env`
-4. Create a cip72 metadata file.
+4. Prepare your cip-72 off chain metadata link you created at the beginning
+([Create Off-chain JSON with DApp data](#create-off-chain-json-with-dapp-data)) 
 5. Launch registration script and follow the instructions `yarn start`
 
 ## Useful commands
