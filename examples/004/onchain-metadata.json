@@ -3,7 +3,9 @@
     "subject": "FakeBlockfrost-003",
     "rootHash": "f1b11b847869028601f6345546deb5b7d7ddebab15e28641739e2a52a23fb506",
     "metadata": [
-      "shorturl.at/enoJO"
+      "https://raw.githubusercontent.com/input-output-hk/dapp-store-cip",
+      "72/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/004/offchai",
+      "n-metadata.json"
     ],
     "type": {
       "action": "REGISTER",

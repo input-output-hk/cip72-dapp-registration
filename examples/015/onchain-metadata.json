@@ -3,7 +3,9 @@
     "subject": "EducationTestDApp-1",
     "rootHash": "d04f90d4bf8b53f71b721ad15609f1f8f00a640293c242ef7ead9d7a6147e22f",
     "metadata": [
-      "shorturl.at/dgBSX"
+      "https://raw.githubusercontent.com/input-output-hk/dapp-store-cip",
+      "72/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/015/offchai",
+      "n-metadata.json"
     ],
     "type": {
       "action": "REGISTER",

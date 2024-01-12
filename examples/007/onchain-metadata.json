@@ -3,7 +3,9 @@
     "subject": "FakeNMKR-003",
     "rootHash": "c1b414fe84f0b890a0b03556376dd28c91e661c1a3820f0b2410fde516535b94",
     "metadata": [
-      "shorturl.at/syDL4"
+      "https://raw.githubusercontent.com/input-output-hk/dapp-store-cip",
+      "72/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/007/offchai",
+      "n-metadata.json"
     ],
     "type": {
       "action": "REGISTER",

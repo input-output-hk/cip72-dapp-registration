@@ -3,7 +3,9 @@
     "subject": "FakeMinswap-1",
     "rootHash": "5d558962593bd61acba04bb827c833592f6ea29bcec18854f77688181a006600",
     "metadata": [
-      "shorturl.at/cnFQ1"
+      "https://raw.githubusercontent.com/input-output-hk/dapp-store-cip",
+      "72/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/016/offchai",
+      "n-metadata.json"
     ],
     "type": {
       "action": "REGISTER",

@@ -3,7 +3,9 @@
     "subject": "MarketPlaceTestDApp-4",
     "rootHash": "334f8ce524108beed129a47ca387c6b163286c346379bef13a2912db92415c6a",
     "metadata": [
-      "shorturl.at/xQ136"
+      "https://raw.githubusercontent.com/input-output-hk/dapp-store-cip",
+      "72/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/013/offchai",
+      "n-metadata.json"
     ],
     "type": {
       "action": "REGISTER",

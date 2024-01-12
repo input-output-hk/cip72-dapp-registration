@@ -3,7 +3,9 @@
     "subject": "GamesTestDApp-4",
     "rootHash": "dc0e807e50e05a9db415edc20bec8e7dbbce939d60a3a556bb513ffb39225773",
     "metadata": [
-      "shorturl.at/cnFQ1"
+      "https://raw.githubusercontent.com/input-output-hk/dapp-store-cip",
+      "72/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/009/offchai",
+      "n-metadata.json"
     ],
     "type": {
       "action": "REGISTER",
