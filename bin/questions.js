@@ -1,18 +1,21 @@
 import inquirer from 'inquirer';
+import { availableNetwork } from './network.js';
+import { walletAddress, protocolFilePath, paymentSKeyFilePath, net } from './config.js';
 
-const walletAddress = process.env.WALLET_ADDRESS;
-const protocolFilePath = process.env.PROTOCOL_FILE_PATH;
-const paymentSkeyFilePath = process.env.PAYMENT_SKEY_FILE_PATH;
-const net = process.env.NET;
+const capitalize = (text) => `${text[0].toUpperCase()}${text.slice(1).toLowerCase()}`;
 
 export const askNetworkQuestion = () => {
+  const choices = Object.values(availableNetwork).map(capitalize);
+  const defaultNetwork = Object.values(availableNetwork).includes(net)
+    ? net
+    : availableNetwork.preview;
   const questions = [
     {
       type: 'list',
       name: 'net',
       message: 'Which network do you want to operate on?',
-      choices: ['Devnet', 'Preview', 'Preprod', 'Mainnet'],
-      default: net ? net.capitalize() : 'Preview',
+      choices,
+      default: capitalize(defaultNetwork),
       filter(val) {
         return val.toLowerCase();
       },
@@ -89,7 +92,7 @@ export const askTransactionQuestions = () => {
       name: 'paymentSkeyFilePath',
       type: 'input',
       message: 'Payment skey file?',
-      default: paymentSkeyFilePath,
+      default: paymentSKeyFilePath,
     },
   ];
   return inquirer.prompt(questions);

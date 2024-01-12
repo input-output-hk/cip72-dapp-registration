@@ -1,35 +1,24 @@
 import { exec } from 'child_process';
 import { rimraf } from 'rimraf';
+import { availableNetwork, ensureNetworkCorrectness } from './network.js';
 
-const getNet = (net) => {
-  let selectedNet = '';
-  switch (net) {
-    case 'devnet':
-      selectedNet = '--testnet-magic=9';
-      break;
-    case 'preprod':
-      selectedNet = '--testnet-magic=1';
-      break;
-    case 'preview':
-      selectedNet = '--testnet-magic=2';
-      break;
-    case 'main':
-    case 'mainnet':
-      selectedNet = '--mainnet';
-      break;
-    default:
-      console.info('Wrong network! Allowed values: devnet, preview, preprod, mainnet', net);
-      break;
-  }
-  return selectedNet;
+const getNetworkParameter = (network) => {
+  ensureNetworkCorrectness(network);
+
+  const mapOfNetworkParameters = {
+    [availableNetwork.preprod]: '--testnet-magic=1',
+    [availableNetwork.preview]: '--testnet-magic=2',
+    [availableNetwork.mainnet]: '--mainnet',
+  };
+  return mapOfNetworkParameters[network];
 };
 
-const queryUTxOUsingCardanoCli = async (walletAddress, net = 'preview') =>
+const queryUTxOUsingCardanoCli = async (walletAddress, net = availableNetwork.preview) =>
   new Promise((resolve, reject) => {
     exec(
       `cardano-cli query utxo \
         --address ${walletAddress} \
-        ${getNet(net)}`,
+        ${getNetworkParameter(net)}`,
       (error, stdout, stderr) => {
         if (error) {
           reject(error.message);
@@ -76,7 +65,12 @@ const createDraftTransaction = (walletAddress, metadataFilePath, txHash, txIx) =
 // TODO: This method currently returns fixed amount of fee for blockfrost.
 // It can be improved by calculating the fee based on the transaction size,
 // but it is out of scope for now as mainnet is not being used at this moment.
-const calculateTransactionFee = (protocolFilePath, amount, blockfrostApiKey, net = 'preview') => {
+const calculateTransactionFee = (
+  protocolFilePath,
+  amount,
+  blockfrostApiKey,
+  net = availableNetwork.preview,
+) => {
   if (blockfrostApiKey) {
     const fee = 500000;
     const finalAmount = amount - fee;
@@ -89,7 +83,7 @@ const calculateTransactionFee = (protocolFilePath, amount, blockfrostApiKey, net
                       --tx-out-count 1 \
                       --witness-count 1 \
                       --byron-witness-count 0 \
-                      ${getNet(net)} \
+                      ${getNetworkParameter(net)} \
                       --protocol-params-file ${protocolFilePath}`;
 
     exec(cmd, (error, stdout, stderr) => {
@@ -127,13 +121,13 @@ const buildRealTransaction = (walletAddress, metadataFilePath, txHash, txIx, fee
     });
   });
 
-const signedRealTransaction = (paymentSkeyFilePath, net = 'preview') =>
+const signedRealTransaction = (paymentSkeyFilePath, net = availableNetwork.preview) =>
   new Promise((resolve, reject) => {
     exec(
       `cardano-cli transaction sign \
         --tx-body-file tx.draft \
         --signing-key-file ${paymentSkeyFilePath} \
-        ${getNet(net)} \
+        ${getNetworkParameter(net)} \
         --out-file tx.signed`,
       (error, stdout, stderr) => {
         if (error) {
@@ -147,10 +141,10 @@ const signedRealTransaction = (paymentSkeyFilePath, net = 'preview') =>
     );
   });
 
-const submitTransactionUsingCardanoCli = async (net = 'preview') =>
+const submitTransactionUsingCardanoCli = async (net = availableNetwork.preview) =>
   new Promise((resolve, reject) => {
     exec(
-      `cardano-cli transaction submit --tx-file tx.signed ${getNet(net)}`,
+      `cardano-cli transaction submit --tx-file tx.signed ${getNetworkParameter(net)}`,
       (error, stdout, stderr) => {
         if (error) {
           reject(error.message);
