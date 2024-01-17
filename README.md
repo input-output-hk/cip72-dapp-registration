@@ -37,21 +37,18 @@ Now, you can use that URL when the script asks you to input, which will be used 
 You will need a node.js and yarn installed in your system.
 
 You need a few tools to be available in your terminal:
- - `cardani-cli`
- - `cardano-address`
- - `bech32`
+ - `cardani-cli` (you can get it from Daedalus.
+ - `cardano-address` (you can get it from Daedalus.
+ - `bech32` (you would need to compile it from https://github.com/IntersectMBO/bech32/releases)
 
 You can set up a local cardano node if you choose to submit the registration transaction this way.
 Alternatively you could use [https://blockfrost.io/](https://blockfrost.io/). To do so you need to get an api key.
 
 We recommend the following ways of getting required binaries and the local node:
 
- - [Latests cardano-wallet release](https://github.com/cardano-foundation/cardano-wallet/releases/latest): Downlaod the `cardano-wallet` archive appropriate for your system, unpack it
-and put the unpacked directory in you $PATH variable so the contents are available in your terminal. Start the local
-node if you wish to use it.
  - Daedalus ([mainnet](https://daedaluswallet.io/en/download/) or
 [preview/preprod](https://docs.cardano.org/cardano-testnet/daedalus-testnet/)): Download the `Daedalus` for chosen
-network, install it and add the `location-of-instalation/bin` to the $PATH variable so the contents are available in
+network, install it and add the `location-of-instalation/bin` for linux, `/Applications/Daedalus\ Preview.app/Contents/MacOS/` for MacOS to the $PATH variable so the contents are available in
 your terminal. This is an easy way to spin up a node locally however you will need to get the `bech32` yourself because
 it is not included in the Daedalus files
 
