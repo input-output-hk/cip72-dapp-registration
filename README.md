@@ -37,8 +37,8 @@ Now, you can use that URL when the script asks you to input, which will be used 
 You will need a node.js and yarn installed in your system.
 
 You need a few tools to be available in your terminal:
- - `cardani-cli` (you can get it from Daedalus.
- - `cardano-address` (you can get it from Daedalus.
+ - `cardani-cli` (you can get it from Daedalus.)
+ - `cardano-address` (you can get it from Daedalus.)
  - `bech32` (you would need to compile it from https://github.com/IntersectMBO/bech32/releases)
 
 You can set up a local cardano node if you choose to submit the registration transaction this way.
