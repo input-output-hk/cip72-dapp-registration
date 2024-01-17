@@ -66,6 +66,8 @@ In few places you will have to provide proper network parameter `(--mainnet | --
 
 If you choose to go with the local node you need to have the `CARDANO_NODE_SOCKET_PATH` env variable set to the path of
 the local node socket file.
+Example for Daedalus preprod on MacOS:
+`CARDANO_NODE_SOCKET_PATH="/Users/<username>/Library/Application Support/Daedalus Preprod/cardano-node.socket"`
 
 ## Step 1: Set up wallet
 
