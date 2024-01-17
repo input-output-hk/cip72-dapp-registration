@@ -39,7 +39,7 @@ You will need a node.js and yarn installed in your system.
 You need a few tools to be available in your terminal:
  - `cardani-cli` (you can get it from Daedalus.)
  - `cardano-address` (you can get it from Daedalus.)
- - `bech32` (you would need to compile it from https://github.com/IntersectMBO/bech32/releases)
+ - `bech32` (it's part of cardano-wallet https://github.com/cardano-foundation/cardano-wallet/releases or you would need to compile it from https://github.com/IntersectMBO/bech32/releases)
 
 You can set up a local cardano node if you choose to submit the registration transaction this way.
 Alternatively you could use [https://blockfrost.io/](https://blockfrost.io/). To do so you need to get an api key.
@@ -63,6 +63,8 @@ In few places you will have to provide proper network parameter `(--mainnet | --
 
 If you choose to go with the local node you need to have the `CARDANO_NODE_SOCKET_PATH` env variable set to the path of
 the local node socket file.
+Example for Daedalus preprod on MacOS:
+`CARDANO_NODE_SOCKET_PATH="/Users/<username>/Library/Application Support/Daedalus Preprod/cardano-node.socket"`
 
 ## Step 1: Set up wallet
 

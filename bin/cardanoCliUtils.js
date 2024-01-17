@@ -29,7 +29,6 @@ const queryUTxOUsingCardanoCli = async (walletAddress, net = availableNetwork.pr
           return;
         }
         const match = stdout.match(/([a-z0-9]{64}) *(\d) *(\d+)/);
-        // console.log(">stdout:", stdout, _match)
         if (match === null) {
           resolve({ txHash: 0, txIx: 0, amount: 0 });
         } else {
