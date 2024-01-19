@@ -34,7 +34,7 @@ Now, you can use that URL when the script asks you to input, which will be used 
 
 ## Set up required tooling
 
-You will need a node.js and yarn installed in your system.
+You will need a node.js installed in your system.
 
 You need a few tools to be available in your terminal:
 
@@ -52,8 +52,9 @@ You need a few tools to be available in your terminal:
 
 Assuming you installed Daedalus in the following path `C:\Program Files\Daedalus Pre-Prod` and you used ghci for getting cabal and the path of binaries is `C:\ghcup\bin`
 ```
-powershell -Command "Start-Process cmd.exe -ArgumentList '/c', 'setx PATH %PATH%;C:\ghcup\bin;C:\Program Files\Daedalus Pre-Prod'"
+setx PATH "%PATH%;C:\ghcup\bin;C:\cabal\bin;C:\Program Files\Daedalus Pre-Prod"
 ```
+You need to restart your command line window in order to take effect the new PATH
 
 ### Testnet-magic numbers 
 
@@ -89,7 +90,7 @@ There are three ways to set up a wallet.
 
 1. Create `phrase.prv` file and fill it up with your mnemonic in space seperated format.
 2. Grant script permission to run `chmod +x ./scripts/restore-mnemonic-wallet.sh`
-3. Restore mnemonic wallet by running `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) yarn restore-mnemonic-wallet`
+3. Restore mnemonic wallet by running `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) npm run restore-mnemonic-wallet`
 (Choose appropriate values of the NETWORK and LOCAL_NODE variables)
 
 ### b) Restore a wallet using existing keys
@@ -105,7 +106,7 @@ If you have your `payment.skey`, `payment.vkey`, `stake.skey` and `stake.vkey`, 
 ### c) Create a new wallet
 
 1. Grant script permission to run `chmod +x ./scripts/setup-new-wallet.sh`
-2. Setup new wallet. `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) yarn setup-new-wallet`
+2. Setup new wallet. `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) npm run setup-new-wallet`
 (Choose appropriate values of the NETWORK and LOCAL_NODE variables)
 3. Request Test ADA (preview or preprod) at [https://docs.cardano.org/cardano-testnet/tools/faucet](https://docs.cardano.org/cardano-testnet/tools/faucet)
 to the generated address from the `payment.addr` file.
@@ -113,12 +114,12 @@ to the generated address from the `payment.addr` file.
 ## Step 2: Run the registration script
 
 1. Make sure your wallet has test ADA for transaction fee (it's a variable amount, something around 190.000 lovelace).
-2. Install packages `yarn install`
+2. Install packages `npm install`
 3. Copy `.env.example-blockfrost` or `.env.example-local-node` to the `.env` file and edit it appropriately
 `cp .env.example-<blockfrost|local-node> .env`
 4. Prepare your cip-72 off chain metadata link you created at the beginning
 ([Create Off-chain JSON with DApp data](#create-off-chain-json-with-dapp-data)) 
-5. Launch registration script and follow the instructions `yarn start`
+5. Launch registration script and follow the instructions `npm run start`
 6. To monitor the status of your dApp registration, simply invoke the provided URL. At the end of successful script run there will be URL for your submitted tx provided for convenience.
 - Preview: https://live-preview.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
 - Preprod: https://live-preprod.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
