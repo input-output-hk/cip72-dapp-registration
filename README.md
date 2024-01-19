@@ -37,20 +37,23 @@ Now, you can use that URL when the script asks you to input, which will be used 
 You will need a node.js and yarn installed in your system.
 
 You need a few tools to be available in your terminal:
- - `cardani-cli` (you can get it from Daedalus.)
- - `cardano-address` (you can get it from Daedalus.)
- - `bech32` (it's part of cardano-wallet https://github.com/cardano-foundation/cardano-wallet/releases or you would need to compile it from https://github.com/IntersectMBO/bech32/releases)
 
-You can set up a local cardano node if you choose to submit the registration transaction this way.
-Alternatively you could use [https://blockfrost.io/](https://blockfrost.io/). To do so you need to get an api key.
+ 1. `cardano-cli` and `cardano-address` included in Daedalus ([mainnet](https://daedaluswallet.io/en/download/) or [preview/preprod](https://docs.cardano.org/cardano-testnet/daedalus-testnet/)
+ 2a. If you prefer using a local node you need `cardano-node` included in Daedalus
+ 2b. If you prefer a remote node you can use your blockfrost.io API Key
+ 3. `bech32`
+    - You can install it using:
+      - `cabal install bech32` or
+      - `nix-shell -p haskellPackages.bech32` or
+      - compile it from https://github.com/IntersectMBO/bech32 or
+      - you install `cardano-wallet`, which includes binaries for bech32
 
-We recommend the following ways of getting required binaries and the local node:
+#### Add your tools in your PATH for Windows 11
 
- - Daedalus ([mainnet](https://daedaluswallet.io/en/download/) or
-[preview/preprod](https://docs.cardano.org/cardano-testnet/daedalus-testnet/)): Download the `Daedalus` for chosen
-network, install it and add the `location-of-instalation/bin` for linux, `/Applications/Daedalus\ Preview.app/Contents/MacOS/` for MacOS to the $PATH variable so the contents are available in
-your terminal. This is an easy way to spin up a node locally however you will need to get the `bech32` yourself because
-it is not included in the Daedalus files
+Assuming you installed Daedalus in the following path `C:\Program Files\Daedalus Pre-Prod` and you used ghci for getting cabal and the path of binaries is `C:\ghcup\bin`
+```
+powershell -Command "Start-Process cmd.exe -ArgumentList '/c', 'setx PATH %PATH%;C:\ghcup\bin;C:\Program Files\Daedalus Pre-Prod'"
+```
 
 ### Testnet-magic numbers 
 
@@ -63,7 +66,15 @@ In few places you will have to provide proper network parameter `(--mainnet | --
 
 If you choose to go with the local node you need to have the `CARDANO_NODE_SOCKET_PATH` env variable set to the path of
 the local node socket file.
-Example for Daedalus preprod on MacOS:
+
+#### Example for Daedalus preprod on Windows 11:
+
+You will need to open `%USERPROFILE%\AppData\Roaming\Daedalus Pre-Prod\Logs\pub\node.log` and search for `CreateSystemdSocketForSnocketPath` and use something similar as this `\\\\.\\pipe\\cardano-node-testnet.24344.0` as your socket path.
+```
+powershell -Command "Start-Process cmd.exe -ArgumentList '/c', 'setx CARDANO_NODE_SOCKET_PATH \\\\.\\pipe\\cardano-node-testnet.24344.0 \'"
+```
+
+#### Example for Daedalus preprod on MacOS:
 `CARDANO_NODE_SOCKET_PATH="/Users/<username>/Library/Application Support/Daedalus Preprod/cardano-node.socket"`
 
 ## Step 1: Set up wallet
