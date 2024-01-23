@@ -56,6 +56,14 @@ setx PATH "%PATH%;C:\ghcup\bin;C:\cabal\bin;C:\Program Files\Daedalus Pre-Prod"
 ```
 You need to restart your command line window in order to take effect the new PATH
 
+#### Add your tools in your PATH for Linux
+
+Assuming you installed Daedalus in the following path `C:\Program Files\Daedalus Pre-Prod` and you used ghci for getting cabal and the path of binaries is `C:\ghcup\bin`
+```
+setx PATH "%PATH%;C:\ghcup\bin;C:\cabal\bin;C:\Program Files\Daedalus Pre-Prod"
+```
+You need to restart your command line window in order to take effect the new PATH
+
 ### Testnet-magic numbers 
 
 In few places you will have to provide proper network parameter `(--mainnet | --testnet-magic NATURAL)`
