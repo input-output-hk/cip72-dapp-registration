@@ -58,19 +58,13 @@ You need a few tools to be available in your terminal:
   ```
  3. Run `nix develop` and answer the cli prompt if you want to run locally cardano-node instead using Blockfrost
 
-### Testnet-magic numbers 
+### NOTE 📝 
+#### Testnet-magic numbers 
 
 In few places you will have to provide proper network parameter `(--mainnet | --testnet-magic NATURAL)`
 
 - 2: Preview. `--testnet-magic=2`
 - 1: Preprod. `--testnet-magic=1`
-
-#### Example for Daedalus preprod on Windows 11:
-
-You will need to open `%USERPROFILE%\AppData\Roaming\Daedalus Pre-Prod\Logs\pub\node.log` and search for `CreateSystemdSocketForSnocketPath` and use something similar as this `\\\\.\\pipe\\cardano-node-testnet.24344.0` as your socket path.
-```
-powershell -Command "Start-Process cmd.exe -ArgumentList '/c', 'setx CARDANO_NODE_SOCKET_PATH \\\\.\\pipe\\cardano-node-testnet.24344.0 \'"
-```
 
 ## Step 1: Set up wallet
 
