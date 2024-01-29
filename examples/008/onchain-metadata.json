@@ -3,9 +3,9 @@
     "subject": "EducationTestDApp-6",
     "rootHash": "744535c81e087080120cef324b961f7c6ee7bb7737197259dd1d47e1f46fc14e",
     "metadata": [
-      "https://raw.githubusercontent.com/input-output-hk/dapp-store-cip",
-      "72/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/008/offchai",
-      "n-metadata.json"
+      "https://raw.githubusercontent.com/input-output-hk/cip72-dapp-reg",
+      "istration/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/008/",
+      "offchain-metadata.json"
     ],
     "type": {
       "action": "REGISTER",

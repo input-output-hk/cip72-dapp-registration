@@ -3,9 +3,9 @@
     "subject": "NFTTestDApp-4",
     "rootHash": "5fd043cfd2a30a1852a6a5c90c3d4dc3d98f4facf6ec60032afd5fc214e01f22",
     "metadata": [
-      "https://raw.githubusercontent.com/input-output-hk/dapp-store-cip",
-      "72/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/011/offchai",
-      "n-metadata.json"
+      "https://raw.githubusercontent.com/input-output-hk/cip72-dapp-reg",
+      "istration/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/011/",
+      "offchain-metadata.json"
     ],
     "type": {
       "action": "REGISTER",
