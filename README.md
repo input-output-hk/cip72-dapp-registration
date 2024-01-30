@@ -77,7 +77,7 @@ There are three ways to set up a wallet.
 
 ### a) Restore a wallet from mnemonic
 
-1. Create `phrase.prv` file and fill it up with your mnemonic in space seperated format.
+1. Create `phrase.prv` file in the root directory and fill it up with your mnemonic in space seperated format.
 2. Grant script permission to run `chmod +x ./scripts/restore-mnemonic-wallet.sh`
 3. Restore mnemonic wallet by running `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) yarn restore-mnemonic-wallet`
 (Choose appropriate values of the NETWORK and LOCAL_NODE variables)
