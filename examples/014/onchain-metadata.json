@@ -3,9 +3,9 @@
     "subject": "SecurityTestDApp-4",
     "rootHash": "e13e0799446f05066de8b77458178f021a9332198c8d0d412a5e22048f22152c",
     "metadata": [
-      "https://raw.githubusercontent.com/input-output-hk/dapp-store-cip",
-      "72/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/014/offchai",
-      "n-metadata.json"
+      "https://raw.githubusercontent.com/input-output-hk/cip72-dapp-reg",
+      "istration/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/014/",
+      "offchain-metadata.json"
     ],
     "type": {
       "action": "REGISTER",

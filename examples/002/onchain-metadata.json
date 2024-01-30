@@ -3,9 +3,9 @@
     "subject": "FakeRayWallet-003",
     "rootHash": "a53be397ab8ab2a06e9b3339e1cf7acd1c5b7810234fb4456bc9891b99ba881f",
     "metadata": [
-      "https://raw.githubusercontent.com/input-output-hk/dapp-store-cip",
-      "72/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/002/offchai",
-      "n-metadata.json"
+      "https://raw.githubusercontent.com/input-output-hk/cip72-dapp-reg",
+      "istration/bb61f58580c2c759c1f3409eb81a4b83dc95e728/examples/002/",
+      "offchain-metadata.json"
     ],
     "type": {
       "action": "REGISTER",
