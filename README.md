@@ -50,13 +50,15 @@ You need a few tools to be available in your terminal:
 ### For Linux users (using nix):
 
  1. Install nix https://nixos.org/download.html
- 2. Add the following in $HOME/.config/nix/nix.config
+ 2. Add the following in /etc/nix/nix.config
   ```
-    substituters = https://cache.nixos.org https://cache.iog.io
-    trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-    experimental-features = nix-command flakes
+substituters = https://cache.nixos.org https://cache.iog.io
+trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env
+allow-import-from-derivation = true
+build-users-group = nixbld
   ```
- 3. Run `nix develop` and answer the cli prompt if you want to run locally cardano-node instead using Blockfrost
+ 3. Run `nix develop` under the root of the project and answer the cli prompt if you want to run locally cardano-node instead using Blockfrost
 
 ### NOTE 📝 
 #### Testnet-magic numbers 
