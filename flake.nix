@@ -2,10 +2,10 @@
   description = "A Nix flake for running a Node.js project with Cardano node and Cardano address";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    cardano-node.url   = "github:IntersectMBO/cardano-node/8.7.3";
+    haskellNix.follows = "cardano-node/haskellNix";
+    nixpkgs.follows    = "cardano-node/nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
-    cardano-node.url = "github:input-output-hk/cardano-node";
-    haskellNix.url = "github:input-output-hk/haskell.nix";
   };
 
   outputs = { self, nixpkgs, flake-utils, cardano-node, haskellNix, ... }@inputs:
