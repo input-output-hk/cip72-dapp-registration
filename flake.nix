@@ -38,7 +38,6 @@
           python3
           pkg-config
           gcc
-          glibc
           binutils
         ];
 
@@ -50,6 +49,7 @@
             cabal update
             cabal install bech32
             export PATH=$PATH:$HOME/.local/bin
+            npm install
             read -p "Do you want to start cardano-node? (Y/n) " -n 1 -r
             echo
             if [[ $REPLY =~ ^[Yy]$ ]]
