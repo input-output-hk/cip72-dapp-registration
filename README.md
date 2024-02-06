@@ -34,38 +34,39 @@ Now, you can use that URL when the script asks you to input, which will be used 
 
 ## Set up required tooling
 
-You will need a node.js and yarn installed in your system.
+Disclaimer: We do not support Windows
 
+You will need a node.js installed in your system.
 You need a few tools to be available in your terminal:
- - `cardani-cli`
- - `cardano-address`
- - `bech32`
 
-You can set up a local cardano node if you choose to submit the registration transaction this way.
-Alternatively you could use [https://blockfrost.io/](https://blockfrost.io/). To do so you need to get an api key.
+### For MacOs users:
 
-We recommend the following ways of getting required binaries and the local node:
+ 1. Download Daedalus ([mainnet](https://daedaluswallet.io/en/download/) or [preview/preprod](https://docs.cardano.org/cardano-testnet/daedalus-testnet/)
+ 2. Add the folder `Applications/Daedalus\ Pre-Prod.app/Contents/MacOS` in your $PATH (in case of other network replace pre-prod for preview or mainnet)
+ 3. Install bech32 by running `cabal install bech32`
+ 4. If you prefer not to use Blockfrost for registering your DApp and instead opt to run a local node, initiate Daedalus and wait for it to synchronize completely.
+ 5. If running Daedalus run `export CARDANO_NODE_SOCKET_PATH=$USER/Library/Application\ Support/Daedalus\ Pre-Prod/cardano-node.socket` (in case of other network replace pre-prod for preview or mainnet)
 
- - [Latests cardano-wallet release](https://github.com/cardano-foundation/cardano-wallet/releases/latest): Downlaod the `cardano-wallet` archive appropriate for your system, unpack it
-and put the unpacked directory in you $PATH variable so the contents are available in your terminal. Start the local
-node if you wish to use it.
- - Daedalus ([mainnet](https://daedaluswallet.io/en/download/) or
-[preview/preprod](https://docs.cardano.org/cardano-testnet/daedalus-testnet/)): Download the `Daedalus` for chosen
-network, install it and add the `location-of-instalation/bin` to the $PATH variable so the contents are available in
-your terminal. This is an easy way to spin up a node locally however you will need to get the `bech32` yourself because
-it is not included in the Daedalus files
+### For Linux users (using nix):
 
-### Testnet-magic numbers 
+ 1. Install nix https://nixos.org/download.html
+ 2. Add the following in /etc/nix/nix.config
+  ```
+substituters = https://cache.nixos.org https://cache.iog.io
+trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env
+allow-import-from-derivation = true
+build-users-group = nixbld
+  ```
+ 3. Run `nix develop` under the root of the project and answer the cli prompt if you want to run locally cardano-node instead using Blockfrost
+
+### NOTE 📝 
+#### Testnet-magic numbers 
 
 In few places you will have to provide proper network parameter `(--mainnet | --testnet-magic NATURAL)`
 
 - 2: Preview. `--testnet-magic=2`
 - 1: Preprod. `--testnet-magic=1`
-
-### Cardano node socket port
-
-If you choose to go with the local node you need to have the `CARDANO_NODE_SOCKET_PATH` env variable set to the path of
-the local node socket file.
 
 ## Step 1: Set up wallet
 
@@ -79,7 +80,7 @@ There are three ways to set up a wallet.
 
 1. Create `phrase.prv` file in the root directory and fill it up with your mnemonic in space seperated format.
 2. Grant script permission to run `chmod +x ./scripts/restore-mnemonic-wallet.sh`
-3. Restore mnemonic wallet by running `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) yarn restore-mnemonic-wallet`
+3. Restore mnemonic wallet by running `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) npm run restore-mnemonic-wallet`
 (Choose appropriate values of the NETWORK and LOCAL_NODE variables)
 
 ### b) Restore a wallet using existing keys
@@ -95,7 +96,7 @@ If you have your `payment.skey`, `payment.vkey`, `stake.skey` and `stake.vkey`, 
 ### c) Create a new wallet
 
 1. Grant script permission to run `chmod +x ./scripts/setup-new-wallet.sh`
-2. Setup new wallet. `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) yarn setup-new-wallet`
+2. Setup new wallet. `NETWORK=(preview|preprod|mainnet) LOCAL_NODE=(true|false) npm run setup-new-wallet`
 (Choose appropriate values of the NETWORK and LOCAL_NODE variables)
 3. Request Test ADA (preview or preprod) at [https://docs.cardano.org/cardano-testnet/tools/faucet](https://docs.cardano.org/cardano-testnet/tools/faucet)
 to the generated address from the `payment.addr` file.
@@ -103,12 +104,12 @@ to the generated address from the `payment.addr` file.
 ## Step 2: Run the registration script
 
 1. Make sure your wallet has test ADA for transaction fee (it's a variable amount, something around 190.000 lovelace).
-2. Install packages `yarn install`
+2. Install packages `npm install`
 3. Copy `.env.example-blockfrost` or `.env.example-local-node` to the `.env` file and edit it appropriately
 `cp .env.example-<blockfrost|local-node> .env`
 4. Prepare your cip-72 off chain metadata link you created at the beginning
 ([Create Off-chain JSON with DApp data](#create-off-chain-json-with-dapp-data)) 
-5. Launch registration script and follow the instructions `yarn start`
+5. Launch registration script and follow the instructions `npm run start`
 6. To monitor the status of your dApp registration, simply invoke the provided URL. At the end of successful script run there will be URL for your submitted tx provided for convenience.
 - Preview: https://live-preview.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
 - Preprod: https://live-preprod.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}

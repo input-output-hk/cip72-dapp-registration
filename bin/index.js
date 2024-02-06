@@ -112,7 +112,7 @@ try {
   await submitTransaction(net, blockfrostApiKey);
   const txId = await getSignedTxTransactionId();
   drawInfo(chalk.black.bgGreenBright.bold, '- Transaction submitted!');
-  drawInfo(chalk.black.bgGreenBright.bold, `- Transaction ID: ${txId}`);
+  drawInfo(chalk.black.bgGreenBright.bold, `- Transaction ID: ${txId.toString().trim()}`);
 
   drawInfo(chalk.black.bgGreenBright.bold, 'Cleaning up transaction files...');
   await cleanupTransactionFiles();
