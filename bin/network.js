@@ -5,8 +5,8 @@ export const availableNetwork = {
 };
 
 const mapOfUIUrls = {
-  [availableNetwork.preview]: 'https://live-preview.ui.dapp-store.lw.iog.io',
-  [availableNetwork.preprod]: 'https://live-preprod.ui.dapp-store.lw.iog.io',
+  [availableNetwork.preview]: 'https://live-preview.dapps.lw.iog.io',
+  [availableNetwork.preprod]: 'https://live-preprod.dapps.lw.iog.io',
   [availableNetwork.mainnet]: '',
 };
 

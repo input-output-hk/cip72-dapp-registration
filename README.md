@@ -111,8 +111,8 @@ to the generated address from the `payment.addr` file.
 ([Create Off-chain JSON with DApp data](#create-off-chain-json-with-dapp-data)) 
 5. Launch registration script and follow the instructions `npm run start`
 6. To monitor the status of your dApp registration, simply invoke the provided URL. At the end of successful script run there will be URL for your submitted tx provided for convenience.
-- Preview: https://live-preview.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
-- Preprod: https://live-preprod.ui.dapp-store.lw.iog.io/dapp-validation-result/${txid}
+- Preview: https://live-preview.dapps.lw.iog.io/dapp-validation-result/${txid}
+- Preprod: https://live-preprod.dapps.lw.iog.io/dapp-validation-result/${txid}
 
 ## Useful commands when using local node
 
