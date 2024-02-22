@@ -1,4 +1,4 @@
-# Guide on how to register Dapp on Cardano blockchain
+# Guide on how to register Dapp on Cardano blockchain in Preview Network (closed beta)
 
 ## About us
 
